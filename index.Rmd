@@ -7,5 +7,8 @@ output:
     theme: paper
 ---
 
+![I haven't figured out how to scale down the image yet!](dancer_logo.JPG)
+<!-- img_scale(img, 10%) -->
+
 This is my portfolio of homework assignments for Computational Biology.
 
