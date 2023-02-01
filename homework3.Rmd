@@ -1,0 +1,85 @@
+---
+title: "Homework 3: Regular Expressions"
+author: "Jules Ford"
+date: "2023-02-01"
+output: html_document
+---
+
+
+#1
+
+
+Find: `\s\s+`
+
+
+Replace: `,`
+
+
+Reasoning: The goal of the problem is to take out the spaces and replace them with commas, but the catch is that there are spaces between some of the text strings that we don’t want to be replaced by commas. The find term is `\s\s+` because we’re looking for at least one space and one or more spaces in addition to that, so it will capture all the spaces that we want to get rid of while preserving the spaces in the text strings. The replace term is a comma because we want to separate everything with commas!
+
+#2
+
+
+Find: `(\w+),(\s)(\w+),(\s)(.*)`
+
+
+Replace: `\3 \1 (\5)`
+
+
+Reasoning: The goal is to put parentheses around the school name, to remove the commas, and to swap the first and last names. The find term I used isolated the last name, looked for a comma, then a single space, then first name, then a comma, then a single space, and then everything to the rest of the line. After finding everything, used `\3` to put the first name first, then `\1` to put the last name second, then `\5` in () to put the school name in (). I kept spaces between each of the replacement terms to keep the spaces in the end result.
+
+#3
+
+
+Find: `.mp3\s`
+
+
+Replace: `.mp3\n`
+
+
+Reasoning: The goal is to separate each song onto a new line. I searched for `.mp3\s` to find each time there’s an end of a song followed by a space (the last song won’t have one but we don’t need a carriage return after that one). The replace term is `.mp3\n` because I want to keep the .mp3 at the end of each song, but instead of a space I want it to start a new line.
+
+#4
+
+
+Find: `(\d+)\s(.*)(.mp3)`
+
+
+Replace: `\2_\1\3`
+
+
+Reasoning: Now I’m trying to take the numbers at the start and put them right before the “.mp3,” preceded by an underscore. To do this, I’m isolating the numbers at the start, all of the song titles, and then the .mp3. I put the important things in () and swapped the placement of the song title `\2` with the numbers `\1` and put and _ between them.
+
+#5
+
+
+Find: `(\w)\w+,(\w+),.*(,\d+)`
+
+
+Replace: `\1_\2\3`
+
+
+Reasoning: The goal is to only keep the first letter of the genus, put an underscore in, keep the whole species name, and only keep the numbers at the very end. The way I did this was by isolating the first letter in (), the entire species name in (), and the very last number in (). My replace term keeps all the things I care about in the same order but adds in an underscore between the first letter of the genus and the species name.
+
+#6
+
+
+Find: `(\w)\w+,(\w{4})\w+,.*(,\d+)`
+
+
+Replace: `\1_\2\3`
+
+
+Reasoning: Very similar to the last problem, but the only difference was that I needed to preserve exactly 4 letters of the species name. To do so, I modified my previous search term to use `\w{4}` so that it would find exactly 4 word characters.
+
+#7
+
+
+Find: `(\w{3})\w+,(\w{3})\w+,(.*),(\d+)`
+
+
+Replace: `\1\2, \4, \3`
+
+
+Reasoning: The goal for this one is to combine the first three letters of the genus and species and to swap the order of the numbers at the end of each line. To do so, I use `\w{3}` at the start of the genus and species parts of the phrase to capture exactly the first three letters, and I capture the first number with .* so that I don’t need to worry about it being a decimal, and I capture the last number with `\d+` so that it will look for one or more number characters. My replace term lumps the two names together without spaces and separates the numbers with spaces and commas.
+
