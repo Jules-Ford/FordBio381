@@ -1,0 +1,134 @@
+---
+title: "Homework #4"
+author: "Jules Ford"
+date: "2023-02-08"
+output: html_document
+---
+This is Homework #4 for Computational Biology.
+
+
+
+**Problem #1**
+
+The code:
+
+```{r}
+x <- 1.1
+a <- 2.2
+b <- 3.3
+
+# Problem 1a
+z <- x^a^b
+print(z)
+
+# Problem 1b
+z <- (x^a)^b
+print(z)
+
+# Problem 1c
+z <- (3*x^3 + 2*x^2 + 1)
+print(z)
+```
+
+
+This problem asks for us to assign values to x, a, and b, and then to assign expressions to z using those variables and computing them. To solve the problem, I used the assignment operator `<-` to assign different values to variables and the `print()` function to display the calculated values.
+
+
+
+**Problem #2**
+
+The code: 
+
+```{r}
+# Problem 2a
+c(1:8, 7:1)
+
+# Problem 2b
+
+# I started out with this code:
+# c(rep(1,1), rep(2,2), rep(3,3), rep(4,4), rep(5,5))
+# which did the job but was too clunky
+# Here's a prettier version:
+
+rep(1:5, c(1, 2, 3, 4, 5))
+
+# Problem 2c
+
+# Similarly, I started out with this code:
+# c(rep(5,1), rep(4,2), rep(3,3), rep(2,4), rep(1,5))
+# which also did the job but was too clunky
+# Here's a prettier version:
+
+rep(5:1, c(1, 2, 3, 4, 5))
+
+```
+
+This problem asks for us to come up with code to print different sequences officially. For 2a, I used a `seq()` shortcut to count to 8 then back to 1. For problems 2b and 2c, I used the `rep()` function to specify the range of numbers in the sequence, and a `c()` function to specify the amount of times each value in the sequence should be repeated.
+
+
+
+**Problem #3**
+
+The code:
+
+```{r}
+set.seed(0)
+# Produce x and y
+x <- runif(n=1)
+y <- runif(n=1)
+# Print x and y
+c(x, "is x", y, "is y")
+# Produce r and theta
+r <- sqrt(x^2 + y^2)
+theta <- atan(y/x)
+# Print r and theta
+c(r, "is r", theta, "is theta")
+```
+
+
+For this problem I had to generate random numbers for an (x, y) Cartesian coordinate and I needed to convert those coordinates to polar coordinates. I started by setting the seed, then randomly generating values for x and y with the `runif()` function. After, I printed x and y so I could check my work. Using x and y, I set their conversion equations to r and theta, and printed the results!
+
+
+
+**Problem #4**
+
+The Code:
+
+```{r}
+# Start of the line
+queueInitial <- c("sheep", "fox", "owl", "ant")
+print(queueInitial)
+# Serpent joins line in the back
+queueA <- append(queueInitial, "serpent")
+print(queueA)
+# Sheep gets on the ark and leaves
+queueB <- queueA[ !queueA == "sheep"]
+print(queueB)
+# Donkey enters line straight at the front
+queueC <- append(queueB, "donkey", after = 0)
+print(queueC)
+# Serpent gets impatient and leaves
+queueD <- queueC[ !queueC == "serpent"]
+print(queueD)
+# Owl gets bored and leaves
+queueE <- queueD[ !queueD == "owl"]
+print(queueE)
+# Aphid enters line and cuts ant
+queueF <- append(queueE, "aphid", after = 2)
+print(queueF)
+queueF[3]
+```
+
+For this problem, we needed to update a line as different animals entered and left. We used `append()` to add different animals to the line and `queueX[ !queueX == "y"]` to get rid of items in the vector.
+
+
+
+**Problem #5**
+
+The code:
+
+```{r}
+
+```
+
+This problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainer.

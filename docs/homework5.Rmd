@@ -1,0 +1,137 @@
+---
+title: "Homework5"
+author: "Jules Ford"
+date: "2023-02-15"
+output: html_document
+---
+
+This is my Homework 5 for Computational Biology!
+
+*Problem #1*
+
+
+```{r}
+myVec <- c(3:10)
+n_dims <- sample(x=myVec, size=1)
+print(n_dims)
+selectedVal <- n_dims
+
+# Create a vector of consecutive integers from 1 to n_dims^2
+vec1 <- c(1:(n_dims)^2)
+print(vec1)
+
+# Use the sample function to randomly reshuffle these values.
+vec2 <- sample(vec1)
+print(vec2)
+
+# create a square matrix with these elements.
+matrix1 <- matrix(data=vec2, nrow=selectedVal, ncol=selectedVal)
+
+# print out the matrix.
+print(matrix1)
+
+# find a function in r to transpose the matrix.
+# the t() function does this!
+tMat <- t(matrix1)
+
+# print it out again and note how it has changed.
+print(tMat)
+# everything flipped on the diagonal!
+
+# calculate the sum and the mean of the elements 
+# in the first row and then the last row.
+
+# sum of first row
+sum(tMat[1,])
+
+# mean of first row
+mean(tMat[1,])
+
+# sum of last row
+sum(tMat[selectedVal,])
+
+# mean of last row
+mean(tMat[selectedVal,])
+
+# read about the eigen()function and use it on your matrix
+calc <- eigen(tMat, symmetric = TRUE, only.values=FALSE, EISPACK = FALSE)
+print(calc)
+# all of the elements of $values range widely
+# all of the elements of $vectors are very low and range between -1 and 1
+
+# dig in with the typeof() function to figure out their type.
+typeof(calc)
+# They are a list!
+
+# if have set your code up properly, 
+# you should be able to re-run it and create a matrix of 
+# different size because n_dims will change
+
+# I didn't get it the first time, but then I turned
+# the value into variables and it worked!
+```
+
+For this problem, we had to randomly generate a number, square it, and then make a matrix using the squared value and modify the matrix. I had some trouble with it at first, but it was cool to try out some of the new functions! I used the `matrix()`
+function to turn the sampled vector into a matrix. Then I used the `t()` function to transpose it, and took sums and averages of the first and last rows using functions like `sum(tMat[1,])` to access all of the values in the first row. By the end, I realized I didn't make it able to run with any generated number (I first generated 7 and plugged in 7 to the functions), so I made the variable `selectedVal` and substituted it where it needed to go.
+
+
+
+*Problem #2*
+
+```{r}
+# Create a list with the following named elements:
+# I will call it bigList
+
+# my_matrix, which is a 4 x 4 matrix filled with random uniform values
+my_matrix <- matrix(data = runif(n=16), nrow = 4, ncol = 4)
+
+# my_logical which is a 100-element vector of TRUE or FALSE values. 
+#Do this efficiently by setting up a vector of random values and then applying an inequality to it.
+my_logical <- (runif(100) < 0.5)
+
+# my_letters, which is a 26-element vector of all the lower-case letters in random order.
+my_letters <- sample(letters)
+
+bigList <- list(my_matrix, my_logical, my_letters)
+print(bigList)
+
+#Then, complete the following steps:
+
+# create a new list, which has the element[2,2] from the matrix, 
+# the second element of the logical vector, and the second element of the letters vector.
+newList <- list(my_matrix[[2,2]], my_logical[2], my_letters[2])
+
+# use the typeof() function to confirm the underlying data types of each component in this list
+typeof(newList[[1]]) # this is a double
+typeof(newList[[2]]) # this is a logical
+typeof(newList[[3]]) # this is a character
+
+# combine the underlying elements from the new list into a single atomic vector with the c() function.
+# what is the data type of this vector?
+finalVector <- c(typeof(newList[[1]]), typeof(newList[[2]]), typeof(newList[[3]]))
+typeof(finalVector) # this is a character
+```
+
+For this problem we had to make a list of three different components using the `list()` function. Then, we had to access items from that list and put it into a new list, which required using `[]` and `[[]]` to confirm their types. Finally, we used `c()` to produce one last list composed of the types found from the prior list.
+
+*Problem #3*
+
+```{r}
+# Create a data frame with the two variables (= columns) and 26 cases (= rows) below:
+
+# call the first variable my_unis and fill it with 26 random uniform values from 0 to 10
+my_unis <- runif(n = 26, min = 0, max = 10)
+
+# call the second variable my_letters and fill it with 26 capital letters in random order.
+my_letters <- sample(LETTERS)
+  
+# Creating the initial data frame:
+firstFrame <- data.frame(my_unis, my_letters)
+print(firstFrame)
+
+# for the first variable, use a single line of code in R to select 4 random rows 
+# and replace the numerical values in those rows with NA.
+firstFrame[sample(1:26, size = 4),1] <- NA
+print(firstFrame)
+```
+This is the start of my code but it's not currently done
