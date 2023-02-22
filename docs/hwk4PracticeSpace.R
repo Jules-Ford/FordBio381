@@ -16,5 +16,9 @@ x <- c(1,2,3,4,5)
 x[1]
 
 
+# The problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainder.
 
+(1:100, )
+
+bigVector <- c(1:100, )
 

@@ -131,4 +131,4 @@ The code:
 
 ```
 
-This problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainer.
+This problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainder.

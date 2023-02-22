@@ -133,5 +133,22 @@ print(firstFrame)
 # and replace the numerical values in those rows with NA.
 firstFrame[sample(1:26, size = 4),1] <- NA
 print(firstFrame)
+
+#for the first variable, write a single line of R code to identify which rows have the missing values.
+firstFrame[!complete.cases(firstFrame),]
+
+
+#re-order the entire data frame to arrange the second variable in alphabetical order
+
+firstFrame$my_letters # This line is for my sake; it says the original order of the letters
+
+order(firstFrame$my_letters) # This line is for my sake; it says the original row numbers of the letters of the alphabet (before firstFrame was alphabetized, "A" was in row 24)
+
+firstFrame[order(firstFrame$my_letters), ] # This properly reorders things!
+
+#calculate the column mean for the first variable.
+workableFrame <- firstFrame[complete.cases(firstFrame),] # making a new data frame with only the rows that have values
+print(mean(workableFrame[,1])) # calculating and printing the mean
 ```
-This is the start of my code but it's not currently done
+
+This problem asks for us to produce a data frame that has two variables. I made the first variable, `my_unis`, with the `runif()` function and set the minimums and maximums. For the second variable I used the `sample()` function with `LETTERS` as the argument, which is known in R to provide the letters of the alphabet, capitalized, in a randomized order. I used these variables and the `data.frame()` function to make the data frame. Then, I randomly assigned 4 rows in it the value `NA`, and used the `!complete.cases()` function to name the rows where `NA` values can be found. I used `order()` to sort the data frame alphabetically from the `my_letters` variable. Finally, I used `complete.cases()` once more to grab the rows from `firstFrame` that don't have values, assigned it to `workableFrame`, and calculated its mean.

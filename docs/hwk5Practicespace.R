@@ -15,17 +15,21 @@ print(firstFrame)
 firstFrame[sample(1:26, size = 4),1] <- NA
 print(firstFrame)
 
-
 #for the first variable, write a single line of R code to identify which rows have the missing values.
-print(vals <- firstFrame[[my_unis == NA, ]])
-# this is currently incorrect
+firstFrame[!complete.cases(firstFrame),]
 
 
 #re-order the entire data frame to arrange the second variable in alphabetical order
 
+firstFrame$my_letters # This line is for my sake; it says the original order of the letters
 
+order(firstFrame$my_letters) # This line is for my sake; it says the original row numbers of the letters of the alphabet (before firstFrame was alphabetized, "A" was in row 24)
+
+firstFrame[order(firstFrame$my_letters), ] # This properly reorders things!
 
 #calculate the column mean for the first variable.
-mean(firstFrame[1,]) # this is currently wrong
+workableFrame <- firstFrame[complete.cases(firstFrame),] # making a new dataframe with only the rows that have values
+print(mean(workableFrame[,1])) # calculating and printing the mean
+
 
 
