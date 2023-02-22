@@ -18,7 +18,11 @@ x[1]
 
 # The problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainder.
 
-(1:100, )
 
-bigVector <- c(1:100, )
+bigVec <- c(1:100) # I start by making a vector called bigVec with numbers 1-100
+print(bigVec) # printing it out to confirm that it works
+
+endVec <- bigVec[(bigVec %% 2 != 0) & (bigVec %% 3 != 0) & (bigVec %% 7 != 0)] # I make a new vector that's assigned to the selection of values from bigVec
+
+print(endVec) # I print out the vector at the end
 

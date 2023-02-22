@@ -471,10 +471,36 @@ to the line and <code>queueX[ !queueX == &quot;y&quot;]</code> to get rid of ite
 in the vector.</p>
 <p><strong>Problem #5</strong></p>
 <p>The code:</p>
+<pre class="r"><code>bigVec &lt;- c(1:100) # I start by making a vector called bigVec with numbers 1-100
+print(bigVec) # printing it out to confirm that it works</code></pre>
+<pre><code>##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+##  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+##  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+##  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+##  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+##  [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
+<pre class="r"><code>endVec &lt;- bigVec[(bigVec %% 2 != 0) &amp; (bigVec %% 3 != 0) &amp; (bigVec %% 7 != 0)] # I make a new vector that&#39;s assigned to the selection of values from bigVec
+
+print(endVec) # I print out the vector at the end</code></pre>
+<pre><code>##  [1]  1  5 11 13 17 19 23 25 29 31 37 41 43 47 53 55 59 61 65 67 71 73 79 83 85
+## [26] 89 95 97</code></pre>
 <p>This problem asks for us to create a vector for numbers 1-100 that
 aren’t divisible by 2, 3, or 7 using arithmetic operators.
 <code>&amp;</code> means and, <code>|</code> means or, and
-<code>5 %% 4</code> gives 1 as a remainder.</p>
+<code>5 %% 4</code> gives 1 as a remainder. To solve this problem, I
+started by making one vector with the <code>c()</code> function that
+includes numbers from 1 to 100. Then, I made a smaller vector that would
+only include the desired values from the first vector. To select the
+numbers I want, I used <code>bigVec[]</code> to select values from that
+vector. Within the <code>[]</code>, I said
+<code>(bigVec %% 2 != 0)</code>, which takes each number from
+<code>bigVec</code> and divides it by 2, and checks its remainder. I
+want the values that have remainders not equal to 0, because if its
+remainder is 0 then it’s divisible by 2. I repeated this process with
+<code>(bigVec %% 3 != 0)</code> and <code>(bigVec %% 7 != 0)</code>,
+separating each with the <code>&amp;</code> operator which tells the
+program that I don’t want any values divisible by 3 or 7 either. I
+finished it off by printing <code>endVec</code> to check my work!</p>
 
 
 

@@ -128,7 +128,12 @@ For this problem, we needed to update a line as different animals entered and le
 The code:
 
 ```{r}
+bigVec <- c(1:100) # I start by making a vector called bigVec with numbers 1-100
+print(bigVec) # printing it out to confirm that it works
 
+endVec <- bigVec[(bigVec %% 2 != 0) & (bigVec %% 3 != 0) & (bigVec %% 7 != 0)] # I make a new vector that's assigned to the selection of values from bigVec
+
+print(endVec) # I print out the vector at the end
 ```
 
-This problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainder.
+This problem asks for us to create a vector for numbers 1-100 that aren't divisible by 2, 3, or 7 using arithmetic operators. `&` means and, `|` means or, and `5 %% 4` gives 1 as a remainder. To solve this problem, I started by making one vector with the `c()` function that includes numbers from 1 to 100. Then, I made a smaller vector that would only include the desired values from the first vector. To select the numbers I want, I used `bigVec[]` to select values from that vector. Within the `[]`, I said `(bigVec %% 2 != 0)`, which takes each number from `bigVec` and divides it by 2, and checks its remainder. I want the values that have remainders not equal to 0, because if its remainder is 0 then it's divisible by 2. I repeated this process with `(bigVec %% 3 != 0)` and `(bigVec %% 7 != 0)`, separating each with the `&` operator which tells the program that I don't want any values divisible by 3 or 7 either. I finished it off by printing `endVec` to check my work!
