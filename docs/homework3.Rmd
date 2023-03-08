@@ -19,7 +19,7 @@ Reasoning: The goal of the problem is to take out the spaces and replace them wi
 
 **Correction!**
 
-This was my original answer ` \s+` works a bit better. The reason why this answer is better is because the original reason why I used `\s` was to represent a space, and this worked in my program, but this could combine things so using an actual space in the find term rather than `\s` will solve the issue!
+This was my original answer ` \s+` works a bit better (where there is a space before the slash). The reason why this answer is better is because the original reason why I used `\s` was to represent a space, and this worked in my program, but this could combine things so using an actual space in the find term rather than `\s` will solve the issue!
 
 #2
 
