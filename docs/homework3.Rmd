@@ -17,6 +17,10 @@ Replace: `,`
 
 Reasoning: The goal of the problem is to take out the spaces and replace them with commas, but the catch is that there are spaces between some of the text strings that we don’t want to be replaced by commas. The find term is `\s\s+` because we’re looking for at least one space and one or more spaces in addition to that, so it will capture all the spaces that we want to get rid of while preserving the spaces in the text strings. The replace term is a comma because we want to separate everything with commas!
 
+**Correction!**
+
+This was my original answer ` \s+` works a bit better. The reason why this answer is better is because the original reason why I used `\s` was to represent a space, and this worked in my program, but this could combine things so using an actual space in the find term rather than `\s` will solve the issue!
+
 #2
 
 

@@ -368,6 +368,12 @@ one space and one or more spaces in addition to that, so it will capture
 all the spaces that we want to get rid of while preserving the spaces in
 the text strings. The replace term is a comma because we want to
 separate everything with commas!</p>
+<p><strong>Correction!</strong></p>
+<p>This was my original answer <code>\s+</code> works a bit better. The
+reason why this answer is better is because the original reason why I
+used <code>\s</code> was to represent a space, and this worked in my
+program, but this could combine things so using an actual space in the
+find term rather than <code>\s</code> will solve the issue!</p>
 <p>#2</p>
 <p>Find: <code>(\w+),(\s)(\w+),(\s)(.*)</code></p>
 <p>Replace: <code>\3 \1 (\5)</code></p>
