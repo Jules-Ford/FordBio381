@@ -483,20 +483,31 @@ from prior problems but omitted the <code>iris</code> at the start of
 each problem (since at the top I state iris so the program knows which
 data frame to work on the whole time).</p>
 <p><strong>Problem 9</strong></p>
-<p>This is the text of what the problem asks for:</p>
-<p>“Create a ‘longer’ data frame using the original iris data set with
-three columns named “Species”, “Measure”, “Value”. The column “Species”
-will retain the species names of the data set. The column “Measure” will
-include whether the value corresponds to Sepal.Length, Sepal.Width,
-Petal.Length, or Petal.Width and the column “Value” will include the
-numerical values of those measurements.”</p>
-<p>Here is what I have so far:</p>
-<pre class="r"><code>#longerFrame &lt;- pivot_longer(iris, cols = Species, Measure, Value, Species=Species, names_to=Measure, values_to=Value)</code></pre>
-<p>I’m not there quite yet and still getting errors; I think I need to
-be more specific in what I’m asking for with the
-<code>pivot_longer()</code> function but I do think I’m using the proper
-function! I’ll include updates as I learn more. (I commented it out for
-now because I don’t want the page to throw errors.)</p>
+<p>Originally I was having trouble with this problem; here is the
+updated solution!</p>
+<pre class="r"><code># need to use pivot_longer()
+longerFrame &lt;- pivot_longer(iris, cols=c(&quot;Sepal.Length&quot;,&quot;Sepal.Width&quot;,&quot;Petal.Length&quot;,&quot;Petal.Width&quot;), names_to=&quot;Measure&quot;)
+print(longerFrame)</code></pre>
+<pre><code>## # A tibble: 600 × 3
+##    Species Measure      value
+##    &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # … with 590 more rows</code></pre>
+<p>This problem asks us to combine the different Length and Width
+columns into one column called “Measure”, using the
+<code>pivot_longer()</code> function. To do this, I set
+<code>cols</code> equal to <code>c()</code> which includes the names of
+the columns I wanted to combine. Then, I set <code>names_to</code> equal
+to “Measure”, the name of the new column.</p>
 
 
 

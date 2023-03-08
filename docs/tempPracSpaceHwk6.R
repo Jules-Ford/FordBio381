@@ -79,4 +79,13 @@ print(irisFinal)
 
 # Problem 9
 
-longerFrame <- pivot_longer(iris, cols = Species, Measure, Value, Species=Species, names_to=Measure, values_to=Value)
+# first attempt:
+#longerFrame <- pivot_longer(iris, cols = Species, Measure, Value, Species=Species, names_to=Measure, values_to=Value)
+# but this doesn't work very well; I think I'm not properly using pivot_longer
+
+
+#"Create a ‘longer’ data frame using the original iris data set with three columns named “Species”, “Measure”, “Value”. The column “Species” will retain the species names of the data set. The column “Measure” will include whether the value corresponds to Sepal.Length, Sepal.Width, Petal.Length, or Petal.Width and the column “Value” will include the numerical values of those measurements."
+
+longerFrame <- pivot_longer(iris, cols=c("Sepal.Length","Sepal.Width","Petal.Length","Petal.Width"), names_to="Measure")
+
+# I believe this works

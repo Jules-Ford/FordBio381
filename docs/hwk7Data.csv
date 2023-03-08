@@ -1,0 +1,31 @@
+pair number,no voles vs. voles,Initial plant volume (m3),sampling date plant volume (m3),change in plant volume (m3)-,plot,A. splendens cover,number of visits by predatory birds-June,number of visits by predatory birds-July,number of visits by predatory birds-August,total visits by predatory birds/15 days,Block,Predator,Rodent,no. times of predatory bird visiting,change in plant volume (m3),change in root biomass (g/m2),A. splendenscover (%),block,feeding frequency of voles on grasses (%),total no. of bird visits/6 days,initial no.of rodents,no. of voles recaptured,vole mortality rate (%)
+1,No vole,4.17,4.81,0.63,1,9,0,1,0,1,1,No predator,No vole,0,1.54,-44,0,1,60,0,4,2,50
+2,No vole,7.18,6.1,-1.08,2,28,2,0,0,2,2,No predator,No vole,1,2.11,119,0,2,80,1,4,4,0
+3,No vole,8.78,10.32,1.53,3,12,0,0,0,0,3,No predator,No vole,0,1.93,-30,0,3,50,3,4,4,0
+4,No vole,0.61,1.23,0.62,4,23,0,0,0,0,4,No predator,No vole,0,2.03,52,0,4,80,1,4,3,25
+5,No vole,1.3,1.46,0.16,5,34,0,2,1,3,5,No predator,No vole,0,1.48,88,0,5,90,1,4,2,50
+6,No vole,13.02,11.55,-1.47,6,20,0,0,0,0,6,No predator,No vole,2,2.17,-61,0,6,70,2,4,4,0
+7,No vole,10.22,10.39,0.17,7,5,0,1,0,1,1,No predator,Vole,2,1.86,-26,50,1,60,0,4,2,50
+8,No vole,5.04,6.62,1.58,8,14,0,0,0,0,2,No predator,Vole,1,1.3,-30,50,2,70,3,4,3,25
+9,No vole,0.68,1.7,1.02,9,37,1,0,2,3,3,No predator,Vole,0,0.7,-48,50,3,80,1,4,4,0
+10,No vole,5.33,5.44,0.11,10,16,2,0,0,2,4,No predator,Vole,1,0.55,80,50,4,50,3,4,2,50
+11,No vole,2.94,3.69,0.75,11,35,0,1,0,1,5,No predator,Vole,2,2.38,33,50,5,80,1,4,3,25
+12,No vole,6.94,8.01,1.07,12,18,0,0,0,0,6,No predator,Vole,0,1.59,42,50,6,50,2,4,2,50
+13,No vole,5.02,6.52,1.5,13,7,0,0,1,1,1,Predator,No vole,1,1.29,76,100,1,30,1,4,2,50
+14,No vole,3.71,3.24,-0.47,14,10,0,0,0,0,2,Predator,No vole,0,2.26,46,100,2,60,4,4,1,75
+15,No vole,7.92,9.21,1.29,15,21,1,0,1,2,3,Predator,No vole,3,1.67,5,100,3,20,2,4,1,75
+1,Vole,2.22,2.34,0.12,n/a,n/a,n/a,n/a,n/a,n/a,4,Predator,No vole,2,1.44,25,100,4,50,4,4,3,25
+2,Vole,6.46,4.77,-1.69,n/a,n/a,n/a,n/a,n/a,n/a,5,Predator,No vole,0,2.79,-9,100,5,20,1,4,2,50
+3,Vole,3.32,2.46,-0.86,n/a,n/a,n/a,n/a,n/a,n/a,6,Predator,No vole,1,2.7,-25,100,6,40,3,4,1,75
+4,Vole,4.16,4.41,0.26,n/a,n/a,n/a,n/a,n/a,n/a,1,Predator,Vole,3,1.54,39,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+5,Vole,5.97,4.21,-1.76,n/a,n/a,n/a,n/a,n/a,n/a,2,Predator,Vole,2,-1.51,-112,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+6,Vole,8.21,6.16,-2.05,n/a,n/a,n/a,n/a,n/a,n/a,3,Predator,Vole,4,-0.6,-21,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+7,Vole,1.57,1.29,-0.28,n/a,n/a,n/a,n/a,n/a,n/a,4,Predator,Vole,6,-1.18,82,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+8,Vole,8.44,6.51,-1.93,n/a,n/a,n/a,n/a,n/a,n/a,5,Predator,Vole,3,-0.33,-41,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+9,Vole,0.75,1.26,0.51,n/a,n/a,n/a,n/a,n/a,n/a,6,Predator,Vole,5,-0.42,-27,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+10,Vole,3.84,4.57,0.73,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+11,Vole,1.72,1.36,-0.36,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+12,Vole,10.22,9.03,-1.19,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+13,Vole,0.82,0.99,0.17,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+14,Vole,0.58,0.34,-0.24,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+15,Vole,4.06,3.17,-0.9,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a,n/a

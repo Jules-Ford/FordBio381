@@ -104,16 +104,12 @@ This problem asks us to take the steps from prior problems and condense them int
 
 **Problem 9**
 
-
-This is the text of what the problem asks for:
-
-"Create a ‘longer’ data frame using the original iris data set with three columns named “Species”, “Measure”, “Value”. The column “Species” will retain the species names of the data set. The column “Measure” will include whether the value corresponds to Sepal.Length, Sepal.Width, Petal.Length, or Petal.Width and the column “Value” will include the numerical values of those measurements."
-
-Here is what I have so far:
+Originally I was having trouble with this problem; here is the updated solution!
 
 ```{r}
-#longerFrame <- pivot_longer(iris, cols = Species, Measure, Value, Species=Species, names_to=Measure, values_to=Value)
+# need to use pivot_longer()
+longerFrame <- pivot_longer(iris, cols=c("Sepal.Length","Sepal.Width","Petal.Length","Petal.Width"), names_to="Measure")
+print(longerFrame)
 ```
 
-I'm not there quite yet and still getting errors; I think I need to be more specific in what I'm asking for with the `pivot_longer()` function but I do think I'm using the proper function! I'll include updates as I learn more. (I commented it out for now because I don't want the page to throw errors.)
-
+This problem asks us to combine the different Length and Width columns into one column called "Measure", using the `pivot_longer()` function. To do this, I set `cols` equal to `c()` which includes the names of the columns I wanted to combine. Then, I set `names_to` equal to "Measure", the name of the new column.
