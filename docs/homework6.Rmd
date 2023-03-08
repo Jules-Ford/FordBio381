@@ -1,0 +1,118 @@
+---
+title: "Homework #6"
+author: "Jules Ford"
+date: "2023-03-01"
+output: html_document
+---
+
+This is Homework #6 for Computational Biology.
+
+
+**Problem #1**
+
+```{r}
+library(tidyverse)
+library(dplyr)
+
+data(iris)
+
+str(iris) # function to examine the structure of the iris dataset
+# There are 150 observations of 5 variables
+```
+
+To begin this problem set, I made sure that tidyverse and dplyr were loaded and ready to use locally. Then, for the first problem I loaded the dataset iris and used the `str()` function to learn that there are 150 observations of 5 variables.
+
+**Problem #2**
+
+```{r}
+# Problem 2
+
+# This requires the use of the filter() function
+iris1 <- filter(iris, Species == "virginica" | Species == "versicolor", Sepal.Length > 6, Sepal.Width > 2.5)
+# There are 56 observations of 5 variables
+```
+This problem asks us to make a new data frame, iris1, that only includes certain species that have certain sepal lengths and widths. To accomplish this I used the `filter()` function and learned that there were 56 observations of 5 variables.
+
+**Problem 3**
+
+```{r}
+# This requires the use of the select() function
+iris2 <- select(iris1, Species, Sepal.Length, Sepal.Width)
+# There are 56 observations of 3 variables
+```
+This problem asks us to make iris2 using iris1, where we have to keep only some of the columns. I did this with the `select()` function and found that iris2 had 56 observations of 3 variables.
+
+**Problem 4**
+
+```{r}
+# This requires the use of the arrange() function
+iris3 <- arrange(iris2, by=Sepal.Length)
+head(iris3)
+```
+This problem asks us to make iris3, a sorted version of iris2 where the values ascend by their sepal length. To do this, I used the `arrange()` function to make iris3 and the `head()` function to show the first 6 rows in the data frame.
+
+**Problem 5**
+
+```{r}
+# Problem 5
+
+# I need to use the mutate() function
+iris4 <- mutate(iris3, Sepal.Area=Sepal.Length*Sepal.Width)
+# There are 56 observations of 4 variables
+```
+This problem asks us to make iris4, an edited version of iris3 that adds an extra column which calculates the area of the sepal by multiplying the length and width columns together. I used the `mutate()` function and saw that there were 56 observations of 4 variables.
+
+**Problem 6**
+
+```{r}
+# Need to use the summarize() function
+iris5 <- summarize(iris4, Average.Sepal.Length=mean(Sepal.Length), Average.Sepal.Width=mean(Sepal.Width), Sample.Size=n())
+print(iris5)
+```
+
+This problem asks us to assign summary statistics (means for sepal length and width along with number of samples) and assign these values to iris5 and to display iris5. I used the `summarize()` function to do this and I used the `print()` function to display iris5.
+
+**Problem 7**
+
+```{r}
+# need to use group_by() function and the summarize() function
+
+iris6 <- group_by(iris4, Species)
+iris6 <- summarize(iris6, Average.Sepal.Length=mean(Sepal.Length), Average.Sepal.Width=mean(Sepal.Width), Sample.Size=n())
+print(iris6)
+```
+
+This problem asks us to make iris6, by taking the iris4 data frame and grouping it by species, and then taking the summary data in a manner similar to how we made iris5 in Problem 5. To accomplish this, I used the `group_by()` function to make iris6 from iris4 but separating by species, and then I used the `summarize()` function to complete the operations similar to how I did it in Problem 6.
+
+**Problem 8**
+
+```{r}
+# start with iris, end with irisFinal
+
+irisFinal <- iris %>%
+  filter(Species == "virginica" | Species == "versicolor", Sepal.Length > 6, Sepal.Width > 2.5)%>% # Problem 2 (we skip Problem 1)
+  select(Species, Sepal.Length, Sepal.Width)%>% # Problem 3
+  arrange(by=Sepal.Length)%>% # Problem 4
+  mutate(Sepal.Area=Sepal.Length*Sepal.Width)%>% # Problem 5
+  group_by(Species)%>% # Problem 7 (we skip Problem 6)
+  summarize(Average.Sepal.Length=mean(Sepal.Length), Average.Sepal.Width=mean(Sepal.Width), Sample.Size=n()) # Problem 7
+
+print(irisFinal)
+```
+
+This problem asks us to take the steps from prior problems and condense them into a single pipe statement. To do this, I used the `%>%` operator after each statement, and took statements from prior problems but omitted the `iris` at the start of each problem (since at the top I state iris so the program knows which data frame to work on the whole time).
+
+**Problem 9**
+
+
+This is the text of what the problem asks for:
+
+"Create a ‘longer’ data frame using the original iris data set with three columns named “Species”, “Measure”, “Value”. The column “Species” will retain the species names of the data set. The column “Measure” will include whether the value corresponds to Sepal.Length, Sepal.Width, Petal.Length, or Petal.Width and the column “Value” will include the numerical values of those measurements."
+
+Here is what I have so far:
+
+```{r}
+#longerFrame <- pivot_longer(iris, cols = Species, Measure, Value, Species=Species, names_to=Measure, values_to=Value)
+```
+
+I'm not there quite yet and still getting errors; I think I need to be more specific in what I'm asking for with the `pivot_longer()` function but I do think I'm using the proper function! I'll include updates as I learn more. (I commented it out for now because I don't want the page to throw errors.)
