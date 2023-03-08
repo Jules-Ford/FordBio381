@@ -21,5 +21,5 @@ This is my portfolio of homework assignments for Computational Biology!
 
 [Click here to see my Homework 5 file on Matrices, Lists, and Data Frames.](homework5.html) 
 
-
+[Click here to see my Homework 6 file on Functions.](homework6.html)
 

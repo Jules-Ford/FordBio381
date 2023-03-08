@@ -116,3 +116,4 @@ Here is what I have so far:
 ```
 
 I'm not there quite yet and still getting errors; I think I need to be more specific in what I'm asking for with the `pivot_longer()` function but I do think I'm using the proper function! I'll include updates as I learn more. (I commented it out for now because I don't want the page to throw errors.)
+
