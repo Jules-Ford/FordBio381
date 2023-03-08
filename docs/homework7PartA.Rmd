@@ -1,0 +1,110 @@
+---
+title: "Homework #7, Part A"
+author: "Jules Ford"
+date: "2023-03-08"
+output: html_document
+---
+
+**Problem 1**
+
+I need to copy-paste the code from the homework and run them to get a bit familiar with them!
+
+This is to read in the file:
+```{r eval=FALSE, include=TRUE}
+z <- read.table("MyDataFile.csv",header=TRUE,sep=",")
+str(z)
+summary(z)
+```
+
+This is to open the libraries:
+```{r}
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+```
+
+This is to read in the data vector:
+```{r}
+# quick and dirty, a truncated normal distribution to work on the solution set
+
+z <- rnorm(n=3000,mean=0.2)
+z <- data.frame(1:3000,z)
+names(z) <- list("ID","myVar")
+z <- z[z$myVar>0,]
+str(z)
+summary(z$myVar)
+```
+
+This is for plotting the data into a histogram:
+```{r}
+p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p1)
+```
+
+This is creating an empirical density curve:
+```{r}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+```
+
+This generates maximum likelihood parameters for the normal curve:
+```{r}
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+```
+
+This generates a curve for the normal probability density:
+```{r}
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+```
+
+
+This adds a curve for exponential probability:
+```{r}
+expoPars <- fitdistr(z$myVar,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$myVar), args = list(rate=rateML))
+ p1 + stat + stat2
+```
+
+This adds a curve for uniform probability density:
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+ p1 + stat + stat2 + stat3
+```
+
+This adds a curve for gamma probability density:
+```{r}
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+```
+
+And this generates a new plot showing the beta probabiltiy density:
+```{r}
+pSpecial <- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+Alright! So that runs through everything once, running the entire sample code. Now, I'm going to run through all of this again, but with my own data set.

@@ -1,0 +1,101 @@
+---
+title: "Homework #7, Part B"
+author: "Jules Ford"
+date: "2023-03-08"
+output: html_document
+---
+
+**Problem 2**
+
+I am using the dataset from this research article: "A rodent herbivore reduces its predation risk through ecosystem engineering" from the Dryad website. [Click here to go to the web page on Dryad that describes this research.](https://datadryad.org/stash/dataset/doi:10.5061%2Fdryad.cvdncjt57)
+
+```{r}
+voleData <- read.table("hwk7Data.csv",header=TRUE,sep=",")
+str(voleData)
+summary(voleData)
+```
+
+```{r}
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+```
+
+This is a histogram for the initial plant volume:
+```{r}
+p1 <- ggplot(data=voleData, aes(x=Initial.plant.volume..m3., y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p1)
+```
+This is the empirical density curve:
+```{r}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+```
+
+
+This gets the maximum likelihood parameters for the normal distribution:
+```{r}
+normPars <- fitdistr(voleData$Initial.plant.volume..m3.,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+```
+
+
+This plots the normal probability density:
+```{r}
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(voleData$Initial.plant.volume..m3.),len=length(voleData$Initial.plant.volume..m3.))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(voleData$Initial.plant.volume..m3.), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+```
+
+This plots the exponential probability density:
+
+```{r}
+expoPars <- fitdistr(voleData$Initial.plant.volume..m3.,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(voleData$Initial.plant.volume..m3.), args = list(rate=rateML))
+ p1 + stat + stat2
+```
+This plots the uniform probability density:
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(voleData$Initial.plant.volume..m3.), args = list(min=min(voleData$Initial.plant.volume..m3.), max=max(voleData$Initial.plant.volume..m3.)))
+ p1 + stat + stat2 + stat3
+```
+
+This plots the gamma probability distribution:
+```{r}
+gammaPars <- fitdistr(voleData$Initial.plant.volume..m3.,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(voleData$Initial.plant.volume..m3.), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+```
+
+And last but not least, this plots the beta probability density:
+```{r}
+pSpecial <- ggplot(data=voleData, aes(x=Initial.plant.volume..m3./(max(Initial.plant.volume..m3. + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=voleData$Initial.plant.volume..m3./max(voleData$Initial.plant.volume..m3. + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(voleData$Initial.plant.volume..m3.), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+**Problem 3**
+
+Honestly, I think that the uniform probability density is the one that best fits the data. This was surprising!
+
+
+

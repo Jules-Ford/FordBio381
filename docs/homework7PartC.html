@@ -13,7 +13,7 @@
 
 <meta name="date" content="2023-03-08" />
 
-<title>Homework #7: Homepage</title>
+<title>Homework #7, Part C</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,21 +350,27 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Homework #7: Homepage</h1>
+<h1 class="title toc-ignore">Homework #7, Part C</h1>
 <h4 class="author">Jules Ford</h4>
 <h4 class="date">2023-03-08</h4>
 
 </div>
 
 
-<p>Since this homework has a ton of code and takes up a lot of space, I
-segmented it into the three main parts.</p>
-<p><a href="homework7PartA.html">Click here to go to Part A, which runs
-through all of Problem 1.</a></p>
-<p><a href="homework7PartB.html">Click here to go to Part B, which runs
-through all of Problems 2 and 3.</a></p>
-<p><a href="homework7PartC.html">Click here to go to Part C, which runs
-through all of Problem 4.</a></p>
+<p><strong>Problem 4</strong></p>
+<p>So in Part B I found that the probability distribution that fit my
+data best was uniform. So, in order to generate new data, I’m going to
+need to use the <code>runif()</code> function. From the data in Part B,
+I found the maximum likelihood parameters: <code>n=30</code>,
+<code>min=0.58</code>, <code>max=13.02</code>.</p>
+<p>Now, I’m going to plug those values into the function:</p>
+<pre class="r"><code>runif(30, min=0.58, max=13.02)</code></pre>
+<pre><code>##  [1] 12.0789049  6.8743241  4.6454229  1.9852559  3.6979646 11.6762288
+##  [7]  5.1804013  3.2354450 11.3282359  1.4358905  2.3234717 12.3957204
+## [13]  5.8941454  7.5862238  8.2470708  2.8286587  5.9115520  8.1064531
+## [19]  7.4181144  5.3673025  6.7848370 12.8374223  0.9889689  2.8617884
+## [25]  4.9833890 11.9949115 12.8172462  8.2662085  6.0396478  5.5914786</code></pre>
+<p><em>I still need to finish the rest of this problem!</em></p>
 
 
 
