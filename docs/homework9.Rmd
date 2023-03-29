@@ -23,7 +23,7 @@ cockroach_file <- "docs/GermanCockroachData.csv" # Data from article
 #cockroachData <- get_data(file_name=cockroach_file)
 #print(cockroach_file$Diet=="medprot")
 
-# what Nick did:
+# what Professor Gotelli did:
 # ant_file <- "CleanData/antcountydata.csv" as a global variable
 #df <- get_data(file_name=ant_file) in the program body
 
