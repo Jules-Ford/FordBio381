@@ -1,0 +1,246 @@
+---
+title: "Homework #8"
+author: "Jules Ford"
+date: "2023-03-22"
+output: html_document
+---
+
+**Problem #1**
+
+Since I don't complete undergrad research in Biology at UVM (my research is with the Philosophy Department) I went online looking for a dataset! I found a cool one on Dryad. [Click here for the dataset](https://datadryad.org/stash/dataset/doi:10.5061%2Fdryad.063h8) and [click here to see the full paper.](https://onlinelibrary.wiley.com/doi/10.1111/jeb.12458)
+
+The study is about variation in nutrient intake for German cockroaches. The three groups of cockroaches observed were wild-type cockroaches, glucose-averse cockroaches, and wild-type x glucose-averse hybrid cockroaches. Researchers measured a variety of metrics, including initial mass, total intake, fat mass, body mass, feces mass, and growth. The cockroaches were fed diets varying in protein content, from low protein to high protein. They were also given different kinds of sugar; some were fed fructose and others were fed glucose.
+
+To keep things simple, I wanted to consider what the differences in total intake would be for each cockroach group, focusing solely on the cockroaches provided a medium-protein diet. A pattern that I would expect from these groups is that the wild-type would have the greatest intake, followed by the hybrid and the glucose-averse cockroaches would have the lowest intake.
+
+**Problem #2**
+
+To come up with numbers that I could potentially expect to support this prediction, I downloaded the dataset and calculated the mean, standard deviation, variance, and sample size for each group:
+
+**Wild-type German cockroach data for medium protein, total intake**
+
+Mean: 11.7636
+
+Standard Deviation: 1.3207022
+
+Variance: 1.558354
+
+n: 20
+
+**Hybrid German cockroach data for medium protein, total intake**
+
+Mean: 11.201452
+
+Standard Deviation: 1.1952825
+
+Variance: 3.1277476
+
+n: 23
+
+**Glucose-averse German cockroach data for medium protein, total intake**
+
+Mean: 6.509735
+
+Standard Deviation: 3.1441545
+
+Variance: 9.8857076
+
+n: 20
+
+**Problem #3**
+
+Next, I need to take these parameters and generate randomized, fake datasets and store them as dataframes. To accomplish this, since we're assuming these data are on a normal distribution, I'll use the `rnorm()` function.
+
+This function takes in parameters n (the number of observations), mean (the mean(), and sd (the standard deviation).
+
+The dataset for just the wild-type:
+
+```{r}
+wild_type <- rnorm(n=20,mean=11.7636,sd=1.3207022)
+print(wild_type)
+
+```
+
+
+The dataset for just the hybrid:
+
+```{r}
+hybrid <- rnorm(n=23,mean=11.201452,sd=1.1952825)
+print(hybrid)
+```
+
+
+The dataset for just the glucose-averse:
+
+```{r}
+glucose_averse <- rnorm(n=20,mean=6.509735,sd=3.1441545)
+print(glucose_averse)
+```
+
+And here's a dataframe of all the roaches together:
+```{r}
+library(tidyverse)
+library(ggplot2)
+
+firstBigFrame <- data.frame("wild.type"= rnorm(n=20,mean=11.7636,sd=1.3207022),"hybrid"=rnorm(n=20,mean=11.201452,sd=1.1952825),"glucose.averse"=rnorm(n=20,mean=6.509735,sd=3.1441545))
+print(firstBigFrame)
+```
+
+I'm honestly really excited about this step because I was stuck on it for a while. At first my approach was to make individual dataframes for each of the different groups (seen above) but then I realized I could use the `data.frame()` function to combine everything neatly and give titles for each of the three groups. I made the executive decision to reduce the hybrid n to 20 even though it was 23 just to keep everything uniform.
+
+Then, I started problem 4 and realized I ran into a big issue: I needed to pick an x and a y variable. So, I ended up rolling with comparing for each cockroach group the total intake versus their growth. In terms of data analysis, I wanted to see within each group whether there'd be a statistically significant relationship between intake and growth. I predict that GA cockroaches would likely have a significant relationship between intake and growth, and Hybrid and Wild Type cockroaches probably wouldn't.
+
+To measure this, I decided that I needed to grab more data from the dataset from the "Growth" column:
+
+**Wild-type German cockroach data for medium protein, growth**
+
+Mean: 6.6646158
+
+Standard Deviation: 0.8682219
+
+Variance: 0.7538092
+
+n: 19
+
+**Hybrid German cockroach data for medium protein, growth**
+
+Mean: 7.0736739
+
+Standard Deviation: 1.0584402
+
+Variance: 1.1202956
+
+n: 23
+
+**Glucose-averse German cockroach data for medium protein, growth**
+
+Mean: 3.967465
+
+Standard Deviation: 1.1635215
+
+Variance: 1.3537822
+
+n: 20
+
+So now, the plan is to make this dataframe again but with 6 columns: 3 will show each roach group's total intake, and 3 will show each group's growth. Here is the new and improved dataframe:
+
+```{r}
+allTheRoaches <- data.frame("WT.intake"=rnorm(n=20,mean=11.7636,sd=1.3207022),"WT.growth"=rnorm(n=20,mean=6.6646158,sd=0.8682219),"Hyb.intake"=rnorm(n=20,mean=11.201452,sd=1.1952825),"Hyb.growth"=rnorm(n=20,mean=7.0736739,sd=1.0584402),"GA.intake"=rnorm(n=20,mean=6.509735,sd=3.1441545),"GA.growth"=rnorm(n=20,mean=3.967465,sd=1.1635215))
+print(allTheRoaches)
+```
+
+
+**Problem #4**
+
+Now that I have the proper dataframe to work with, I want to analyze the data and make graphs for each group:
+
+```{r}
+# Regression analysis on each group
+lm_WT <- lm(WT.growth ~ WT.intake, data=allTheRoaches)
+summary(lm_WT)
+lm_Hyb <- lm(Hyb.growth ~ Hyb.intake, data=allTheRoaches)
+summary(lm_Hyb)
+lm_GA <- lm(GA.growth ~ GA.intake, data=allTheRoaches)
+summary(lm_GA)
+
+wt_scatter <- plot(WT.growth ~ WT.intake, main = "Wild Type intake versus growth", data=allTheRoaches)
+hyb_scatter <- plot(Hyb.growth ~ Hyb.intake, main = "Hybrid intake versus growth", data=allTheRoaches)
+ga_scatter <- plot(GA.growth ~ GA.intake, main = "Glucose Averse intake versus growth", data=allTheRoaches)
+
+```
+
+I used `lm()` make linear models for each group and I used `plot()` to make scatterplots for each group. One thing I'd like to learn in the future is how to incorporate the `abline()` function to include a line of best fit, and how to group each of the columns in the dataset into a single plot. (I've done both of these in the past but I was having trouble figuring out how to do this.)
+
+**Problem #5**
+
+This problem asks us to run the analysis a few times without changing parameters but using different randomized numbers. Here are the p-values for each group after running it three times:
+
+WT p-values: 0.04576, 0.5647, 0.7041
+Hybrid p-values: 0.4899, 0.6637, 0.6362
+GA p-values: 0.1966, 0.8681, 0.649
+
+It seems that for each group, it isn't super likely that there's a statistically significant relationship between intake and growth. The only time that it was statistically significant was with one of the trials for the WT cockroaches, which was one of the groups I wasn't expecting to have a statistically significant relationship.
+
+**Problem #6**
+
+This problem asks us to adjust the means of the groups to see how small the differences between the groups can be to still produce a significant difference. I don't think adjusting the means to become closer to each other will lead to a significant difference given that the original dataset is not significant, but here goes!
+
+To do this, I decreased the WT and Hybrid intake means by 1 and increased the GA intake mean by 1. I decreased the WT and Hybrid growth by 1 and increased the GA growth by 1.
+
+```{r}
+smallerMeanRoaches <- data.frame("WT.intake.s"=rnorm(n=100,mean=10.7636,sd=1.3207022),"WT.growth.s"=rnorm(n=100,mean=5.6646158,sd=0.8682219),"Hyb.intake.s"=rnorm(n=100,mean=10.201452,sd=1.1952825),"Hyb.growth.s"=rnorm(n=100,mean=6.0736739,sd=1.0584402),"GA.intake.s"=rnorm(n=100,mean=7.509735,sd=3.1441545),"GA.growth.s"=rnorm(n=100,mean=4.967465,sd=1.1635215)) # .s suffix is a reminder that it's a smaller differences between means
+
+lm_smaller_WT <- lm(WT.growth.s ~ WT.intake.s, data=smallerMeanRoaches)
+summary(lm_smaller_WT)
+lm_smaller_Hyb <- lm(Hyb.growth.s ~ Hyb.intake.s, data=smallerMeanRoaches)
+summary(lm_smaller_Hyb)
+lm_smaller_GA <- lm(GA.growth.s ~ GA.intake.s, data=smallerMeanRoaches)
+summary(lm_smaller_GA)
+```
+Here are the p-values for each group after running it three times:
+
+WT p-values: 0.8275, 0.137, 0.7171
+Hybrid p-values: 0.167, 0.8591, 0.7895
+GA p-values: 0.9586, 0.4543, 0.1322
+
+Unsurprisingly it doesn't seem like there are any significant trends in p-values for each of the groups.
+
+**Problem #7**
+
+This problem asks us to adjust the sample size to see how small our sample sizes can be to detect a statistically significant pattern. Since the data for each group are currently not generating statistically significant results, I wanted to run this by actually increasing the sample sizes for each group and seeing if the results become statistically significant at a larger n. 
+
+```{r}
+largerSizeRoaches <- data.frame("WT.intake.n"=rnorm(n=100,mean=11.7636,sd=1.3207022),"WT.growth.n"=rnorm(n=100,mean=6.6646158,sd=0.8682219),"Hyb.intake.n"=rnorm(n=100,mean=11.201452,sd=1.1952825),"Hyb.growth.n"=rnorm(n=100,mean=7.0736739,sd=1.0584402),"GA.intake.n"=rnorm(n=100,mean=6.509735,sd=3.1441545),"GA.growth.n"=rnorm(n=100,mean=3.967465,sd=1.1635215)) # .n suffix is a reminder that it's a larger sample size
+
+lm_larger_WT <- lm(WT.growth.n ~ WT.intake.n, data=largerSizeRoaches)
+summary(lm_larger_WT)
+lm_larger_Hyb <- lm(Hyb.growth.n ~ Hyb.intake.n, data=largerSizeRoaches)
+summary(lm_larger_Hyb)
+lm_larger_GA <- lm(GA.growth.n ~ GA.intake.n, data=largerSizeRoaches)
+summary(lm_larger_GA)
+```
+
+Here are the p-values for each group after running it three times:
+
+WT p-values: 0.3797, 0.1618, 0.5585
+
+
+Hybrid p-values: 0.2949, 0.8096, 0.1523
+
+
+GA p-values: 0.9596, 0.8306, 0.9036
+
+The thing I like about these results is that they feel more consistent then the data from earlier. But I want to run it once more with an even larger sample size to see what happens:
+
+```{r}
+hugeSizeRoaches <- data.frame("WT.intake.nn"=rnorm(n=1000,mean=11.7636,sd=1.3207022),"WT.growth.nn"=rnorm(n=1000,mean=6.6646158,sd=0.8682219),"Hyb.intake.nn"=rnorm(n=1000,mean=11.201452,sd=1.1952825),"Hyb.growth.nn"=rnorm(n=1000,mean=7.0736739,sd=1.0584402),"GA.intake.nn"=rnorm(n=1000,mean=6.509735,sd=3.1441545),"GA.growth.nn"=rnorm(n=1000,mean=3.967465,sd=1.1635215)) # .nn suffix is a reminder that it's an even larger sample size
+
+lm_huge_WT <- lm(WT.growth.nn ~ WT.intake.nn, data=hugeSizeRoaches)
+summary(lm_huge_WT)
+lm_huge_Hyb <- lm(Hyb.growth.nn ~ Hyb.intake.nn, data=hugeSizeRoaches)
+summary(lm_huge_Hyb)
+lm_huge_GA <- lm(GA.growth.nn ~ GA.intake.nn, data=hugeSizeRoaches)
+summary(lm_huge_GA)
+```
+
+Here are the p-values for each group after running it three times:
+
+WT p-values: 0.3884, 0.9436, 0.6803
+
+
+Hybrid p-values: 0.2677, 0.006802, 0.297
+
+
+GA p-values: 0.4927, 0.04421, 0.521
+
+This honestly felt pretty inconsistent as well, I think overall I'm going to conclude that there aren't likely statistically significant relationships for each of these groups! (Despite a few low and very low p-values, since no group is consistently low it doesn't make sense to reject the null hypothesis.)
+
+
+**Problem #8**
+
+(Just asks us to ensure our write-up on this homework is thorough.)
+
+
+**Problem #9**
+
+I didn't have time for this part of the problem unfortunately!
