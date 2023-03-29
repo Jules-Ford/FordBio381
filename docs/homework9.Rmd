@@ -1,0 +1,64 @@
+---
+title: "Homework #9"
+author: "Jules Ford"
+date: "2023-03-29"
+output: html_document
+---
+
+This homework builds off of the data and hypotheses from Homework #8. To keep things simple, [click here to learn about the dataset I'm using and the predictions I'm making about the data.](homework8.html)
+
+```{r}
+# load packages -------------------
+library(tidyverse)
+library(ggplot2)
+
+# source function files --------------------
+
+#source("Functions/GetData_fun.R")
+#source("Functions/CalculateStuff_fun.R")
+
+
+# global variables & preliminary calls ----------------
+cockroach_file <- "docs/GermanCockroachData.csv" # Data from article
+#cockroachData <- get_data(file_name=cockroach_file)
+#print(cockroach_file$Diet=="medprot")
+
+# what Nick did:
+# ant_file <- "CleanData/antcountydata.csv" as a global variable
+#df <- get_data(file_name=ant_file) in the program body
+
+#Okay so I figured it out. In Struc Prog problem we literally used a file to take out the data so that is what I'll need to do. This homework is going to be super challenging but super rewarding!
+
+# load in data & clean
+
+
+# program body ----------------------
+
+# Calculations
+
+# Plotting
+
+# Summarize
+
+
+```
+
+```{r}
+#Here is the code I need to do stuff with in functions
+
+allTheRoaches <- data.frame("WT.intake"=rnorm(n=20,mean=11.7636,sd=1.3207022),"WT.growth"=rnorm(n=20,mean=6.6646158,sd=0.8682219),"Hyb.intake"=rnorm(n=20,mean=11.201452,sd=1.1952825),"Hyb.growth"=rnorm(n=20,mean=7.0736739,sd=1.0584402),"GA.intake"=rnorm(n=20,mean=6.509735,sd=3.1441545),"GA.growth"=rnorm(n=20,mean=3.967465,sd=1.1635215))
+print(allTheRoaches)
+
+# Regression analysis on each group
+lm_WT <- lm(WT.growth ~ WT.intake, data=allTheRoaches)
+summary(lm_WT)
+lm_Hyb <- lm(Hyb.growth ~ Hyb.intake, data=allTheRoaches)
+summary(lm_Hyb)
+lm_GA <- lm(GA.growth ~ GA.intake, data=allTheRoaches)
+summary(lm_GA)
+
+wt_scatter <- plot(WT.growth ~ WT.intake, main = "Wild Type intake versus growth", data=allTheRoaches)
+hyb_scatter <- plot(Hyb.growth ~ Hyb.intake, main = "Hybrid intake versus growth", data=allTheRoaches)
+ga_scatter <- plot(GA.growth ~ GA.intake, main = "Glucose Averse intake versus growth", data=allTheRoaches)
+```
+
