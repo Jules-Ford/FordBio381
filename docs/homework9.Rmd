@@ -8,31 +8,77 @@ output: html_document
 This homework builds off of the data and hypotheses from Homework #8. To keep things simple, [click here to learn about the dataset I'm using and the predictions I'm making about the data.](homework8.html)
 
 ```{r}
+
+# This homework is going to be super challenging but super rewarding!
+
+# Step 1: Put the roach data into a data frame (this requires data cleaning in R) - I did it!
+
+# Step 1.5: grab the summary stats for each group
+
+# Step 2: snag the roach data from the df and then run regression analyses on each group
+
+# Step 3: make plots for each group
+
+# Step 4: make summaries for each group (using variables produced in regression analysis)
+
 # load packages -------------------
 library(tidyverse)
 library(ggplot2)
 
 # source function files --------------------
 
-#source("Functions/GetData_fun.R")
-#source("Functions/CalculateStuff_fun.R")
-
+source("Homework9_Functions.R") # This is the file with the functions I will need
 
 # global variables & preliminary calls ----------------
-cockroach_file <- "docs/GermanCockroachData.csv" # Data from article
-#cockroachData <- get_data(file_name=cockroach_file)
-#print(cockroach_file$Diet=="medprot")
 
-# what Professor Gotelli did:
-# ant_file <- "CleanData/antcountydata.csv" as a global variable
-#df <- get_data(file_name=ant_file) in the program body
+cockroach_file <- "GermanCockroachData.csv" # Data from article is in the file with this name
 
-#Okay so I figured it out. In Struc Prog problem we literally used a file to take out the data so that is what I'll need to do. This homework is going to be super challenging but super rewarding!
+# Load in data & clean ----------------
 
-# load in data & clean
+rawCockroachDataFrame <- readIn(cockroach_file) # This function reads in the data
+
+cleanCockroachData <- clean_up(rawCockroachDataFrame) # This function pares down the data frame to the cockroaches that were on a medium protein diet
+
+wt_mean_intake <- get_mean_intake(cleanCockroachData, "WT")
+hyb_mean_intake <- get_mean_intake(cleanCockroachData, "Hybrid")
+ga_mean_intake <- get_mean_intake(cleanCockroachData, "GA")
+
+
+# The issue here is that there is an NA value in this column that I need to remove
+# (Should put in a complete.cases line of code earlier on in the process)
+
+# What the internet says: If trim is zero (the default), the arithmetic mean of the values in x is computed, as a numeric or complex vector of length one. If x is not logical (coerced to numeric), numeric (including integer) or complex, NA_real_ is returned, with a warning.
+
+# This is the warning that I get: Warning: argument is not numeric or logical: returning NA
+
+wt_mean_growth <- get_mean_growth(cleanCockroachData, "WT")
+hyb_mean_growth <- get_mean_growth(cleanCockroachData, "Hybrid")
+ga_mean_growth <- get_mean_growth(cleanCockroachData, "GA")
+
+
+# Well, for now I can work on getting the ST Dev and the count. I can come back to this part later.
+
+
+
+
+wt_count <- growthCounter(cleanCockroachData, "WT")
+hyb_count <- growthCounter(cleanCockroachData, "Hybrid")
+ga_count <- growthCounter(cleanCockroachData, "GA")
+
 
 
 # program body ----------------------
+
+# Step 1.5: grab the summary stats for each gorup
+
+# Step 2: snag the roach data from the df and then run regression analyses on each group
+
+# Step 3: make plots for each group
+
+# Step 4: make summaries for each group (using variables produced in regression analysis)
+
+
+
 
 # Calculations
 
