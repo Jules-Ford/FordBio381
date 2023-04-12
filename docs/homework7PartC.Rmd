@@ -12,7 +12,25 @@ So in Part B I found that the probability distribution that fit my data best was
 Now, I'm going to plug those values into the function:
 
 ```{r}
-runif(30, min=0.58, max=13.02)
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+
+# Plot of the new data
+newGraph <- runif(30, min=0.58, max=13.02)
+
+
+# This is the code from Part B that plots the original histogram
+voleData <- read.table("hwk7Data.csv",header=TRUE,sep=",")
+p1 <- ggplot(data=voleData, aes(x=Initial.plant.volume..m3., y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",linewidth=0.2) # This sets up the histogram
+
+xval <- seq(0,max(voleData$Initial.plant.volume..m3.),len=length(voleData$Initial.plant.volume..m3.)) # This grabs the variable needed for plotting the curve
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(voleData$Initial.plant.volume..m3.), args = list(min=min(voleData$Initial.plant.volume..m3.), max=max(voleData$Initial.plant.volume..m3.))) # This is the code for the curve
+ 
+p1 <-  p1 +  stat3 # This combines the plot and the curve
+print(p1) # This prints everything
+
 ```
 
-*I still need to finish the rest of this problem!*
+Question to answer: How do the two histogram profiles compare? Do you think the model is doing a good job of simulating realistic data that match your original measurements? Why or why not?
+
