@@ -23,10 +23,12 @@ This is my portfolio of homework assignments for Computational Biology!
 
 [Click here to see my Homework 6 file on Functions.](homework6.html)
 
-[Click here to see my Homework 7 on Simulating and Fitting Data Distributions.](homework7.html) This one is still in the works!
+[Click here to see my Homework 7 on Simulating and Fitting Data Distributions.](homework7.html) Part C for this one is still in the works!
 
 [Click here to see my Homework 8 on Creating Fake Data Sets to Explore Hypotheses.](homework8.html)
 
 [Click here to see my Homework 9 on Organizing Code with Structured Programming.](homework9.html)
+
+I still need to upload Homework 10.
 
 [Click here to see my Homework 11 on Batch Processing.](homework11.html) This one is still in the works!

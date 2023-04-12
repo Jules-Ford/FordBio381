@@ -5,67 +5,55 @@ date: "2023-03-08"
 output: html_document
 ---
 
+**This is the part of the homework that I have yet to finish!**
+My current problems is that I'm having trouble figuring out what to generate for the new x and y variables, and how to place those in a new data frame.
+
+Afterward I need to figure out how to re-plot the normal distribution with the real data from Part B (initially I chose to do a uniform distribution so I figured that out, but I haven't figured out how to re-plot the normal distribution).
+
+
 **Problem 4**
 
-So in Part B I found that the probability distribution that fit my data best was uniform. So, in order to generate new data, I'm going to need to use the `runif()` function. From the data in Part B, I found the maximum likelihood parameters: `n=30`, `min=0.58`, `max=13.02`.
+So in Part B I found that the probability distribution that fit my data best was uniform. So, in order to generate new data, I'm going to need to use the `runif()` function. From the data in Part B, I found the maximum likelihood parameters for a normal distribution: `n=30`, `min=0.58`, `max=13.02`.
 
-Now, I'm going to plug those values into the function:
-
+First I'll load in some packages:
 ```{r}
 library(ggplot2) # for graphics
 library(MASS) # for maximum likelihood estimation
+```
 
-# Plot of the new data
+Next, I'll plot the new randomized plot:
+```{r}
+# Need to generate the x and y variables. X is initial plant volume and Y is the density. I'm goint to place these data into a dataframe.
 
-#Need to generate the x and they y variables. X is the Initial plant volume and Y is the density
-yNewData <- runif(30, min=0.58, max=13.02)
-xNewData <- 3 # just a placeholder
-finalDataFrame <- data.frame("xNewData"=runif())
+#newPlotDF <- data.frame("XInitialVol"=rnorm(n=30,min=0.58,max=13.02),"YDensity"=rnorm(30,min=.5,max=.8)) # For now I'm totally making up values for the Y variable. I'm not sure how to calculate them just yet so I want to make sure the code works
 
-xNewData <- 3 # just a placeholder
-
-# But those values need to go into a new dataframe. I need to generate a new dataframe with an x col and a y col (Look at hwk 8 for help!)
 
 #newGraphData <- (runif(30, min=0.58, max=13.02)
-newGraph <- ggplot(data=newGraphData, aes(x=xNewData,y=yNewData)) + geom_histogram(color="lightblue",fill="cornsilk",linewidth=0.2)
+#newGraph <- ggplot(data=newPlotDF, aes(x=newPlotDF$XInitialVol,y=newPlotDF$YDensity)) + geom_histogram(color="lightblue",fill="cornsilk",linewidth=0.2)
 
-# This is the code from Part B that plots the original histogram
+# The long story short is I'm not really sure how I'm supposed to produce the x and y variables with maximum likelihood estimation. I'm going to make sure to ask you about it in office hours!
+
+```
+
+Here I'll plot the graph from Part B with the real data:
+
+```{r}
+# This is code I pulled from Part B
 voleData <- read.table("hwk7Data.csv",header=TRUE,sep=",")
 p1 <- ggplot(data=voleData, aes(x=Initial.plant.volume..m3., y=..density..)) +
-  geom_histogram(color="grey60",fill="cornsilk",linewidth=0.2) # This sets up the histogram
-
-xval <- seq(0,max(voleData$Initial.plant.volume..m3.),len=length(voleData$Initial.plant.volume..m3.)) # This grabs the variable needed for plotting the curve
-stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(voleData$Initial.plant.volume..m3.), args = list(min=min(voleData$Initial.plant.volume..m3.), max=max(voleData$Initial.plant.volume..m3.))) # This is the code for the curve
- 
-# need to add normal rather than uniform
-
-p1 <-  p1 +  stat3 # This combines the plot and the curve
-print(p1) # This prints everything
-
-
-#----norm fix
-# above properly does the uniform distribution but now I want to plot the graph with a NORMAL distribution!
-# the attempt to plot the normal data
-
-
-
+  geom_histogram(color="grey60",fill="cornsilk",linewidth=0.2)
+print(p1)
 normPars <- fitdistr(voleData$Initial.plant.volume..m3.,"normal")
-print(normPars)
-str(normPars)
-normPars$estimate["mean"] # note structure of getting a named attribute
-
+normPars$estimate["mean"] 
 meanML <- normPars$estimate["mean"]
 sdML <- normPars$estimate["sd"]
-
 xval <- seq(0,max(voleData$Initial.plant.volume..m3.),len=length(voleData$Initial.plant.volume..m3.))
-
- stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(voleData$Initial.plant.volume..m3.), args = list(mean = meanML, sd = sdML))
- p1 + stat
-
-
+stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(voleData$Initial.plant.volume..m3.), args = list(mean = meanML, sd = sdML))
+p1 + stat
 
 
 ```
 
 Question to answer: How do the two histogram profiles compare? Do you think the model is doing a good job of simulating realistic data that match your original measurements? Why or why not?
 
+**Still need to answer this question when I figure out how to make the graph!**
