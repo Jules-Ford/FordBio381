@@ -7,22 +7,9 @@ output: html_document
 
 This homework builds off of the data and hypotheses from Homework #8. To keep things simple, [click here to learn about the dataset I'm using and the predictions I'm making about the data.](homework8.html)
 
+The main challenge with this homework (I'm not sure if this qualifies for the modifications desired in Problem #2 of the homework description) was that during Homework 8, I did all the mean/count/sd calculations in Excel instead of R. So, with this homework converting Homework 8's code wasn't too bad, but my challenge was figuring out how to write functions that determined the summary stats I needed in R rather than doing them in Excel like I did previously.
+
 ```{r}
-
-# This homework is going to be super challenging but super rewarding!
-
-# Step 1: Put the roach data into a data frame (this requires data cleaning in R) - I did it!
-
-# Step 1.5: grab the summary stats for each group. It was tough but I did it!
-
-# Step 2: snag the roach data from the df and then run regression analyses on each group -- having trouble with the regression analyses
-
-# Step 3: make plots for each group
-
-# Step 4: make summaries for each group (using variables produced in regression analysis). I set up for the code for this but my regression analysis code is currently faulty so it won't work until it's fixed
-
-
-# The main challenge for me with this homework (I'm not sure if this qualifies for the modifications desired in Problem #2 of the Homework description) was that during Homework 8 to make things easy I did all the mean/count/sd calculations in Excel instead of R. So, with this homework converting Homework 8 was easy, but my challenge was figuring out how to write functions that determined the summary stats I needed in R rather than doing them in Excel like I did previously.
 
 # load packages -------------------
 library(tidyverse)
@@ -40,17 +27,13 @@ cockroach_file <- "GermanCockroachData.csv" # Data from article is in the file w
 
 rawCockroachDataFrame <- readIn(cockroach_file) # This function reads in the data
 
- # I only want the medprot data. So, I used the filter() function and the select() function.
-# Perfect. This is a lot prettier and less busy. Now I want to calculate all the summary statistics from this dataframe. But, I'll probably want to do that in a separate function. So, I'm going to send this final dataframe as the output to the main program file. 
-
-cleanCockroachData <- clean_up(rawCockroachDataFrame) # This function pares down the data frame to the cockroaches that were on a medium protein diet
-
+cleanCockroachData <- clean_up(rawCockroachDataFrame) # This function pares down the data frame to the cockroaches that were on a medium protein diet using the filter() and dplyr::select() function.
 
 # Program body ----------------------
 
 # Calculations: Grab summary stats ----------------
 
-# Finding the mean for growth and total intake for each of the three groups:
+# Finding the mean for growth & total intake for each group:
 
 wt_mean_intake <- get_mean_intake(cleanCockroachData, "WT")
 hyb_mean_intake <- get_mean_intake(cleanCockroachData, "Hybrid")
@@ -60,7 +43,7 @@ wt_mean_growth <- get_mean_growth(cleanCockroachData, "WT")
 hyb_mean_growth <- get_mean_growth(cleanCockroachData, "Hybrid")
 ga_mean_growth <- get_mean_growth(cleanCockroachData, "GA")
 
-# Finding the counts for growth and total intake for each of the three groups:
+# Finding the counts for growth & total intake for each group:
 
 # Growth count
 wt_growth_count <- as.numeric(growthCounter(cleanCockroachData, "WT"))
@@ -74,73 +57,46 @@ ga_intake_count <- as.numeric(intakeCounter(cleanCockroachData, "GA"))
 
 # It looks like the general growth and intake counts are all around 20. So, I'm going to standardize it so that there's n=20 for all of the metrics.
 
+# Finding the standard deviations for growth & total intake for each group:
 
-# Finding the standard deviations for growth and total intake for each of the three groups:
-
-# Growth count
+# Growth st dev
 wt_sd_growth <- as.numeric(get_sd_growth(cleanCockroachData, "WT"))
 hyb_sd_growth <- as.numeric(get_sd_growth(cleanCockroachData, "Hybrid"))
 ga_sd_growth <- as.numeric(get_sd_growth(cleanCockroachData, "GA"))
 
-# Total intake count
+# Total st dev
 wt_sd_intake <- as.numeric(get_sd_intake(cleanCockroachData, "WT"))
 hyb_sd_intake <- as.numeric(get_sd_intake(cleanCockroachData, "Hybrid"))
 ga_sd_intake <- as.numeric(get_sd_intake(cleanCockroachData, "GA"))
 
 # Make data frame from variables ----------------------
 
-# Next I combined all the variables into one data frame; I did this here because it would be more inefficient to put it in a function
+# Next I combined all the variables into one data frame. (I did this here because it's more efficient.)
 allTheRoaches <- data.frame("WT.intake"=rnorm(n=20,mean=wt_mean_intake,sd=wt_sd_intake),"WT.growth"=rnorm(n=20,mean=wt_mean_growth,sd=wt_sd_growth),"Hyb.intake"=rnorm(n=20,mean=hyb_mean_intake,sd=hyb_sd_intake),"Hyb.growth"=rnorm(n=20,mean=hyb_mean_growth,sd=hyb_sd_growth),"GA.intake"=rnorm(n=20,mean=ga_mean_intake,sd=ga_sd_intake),"GA.growth"=rnorm(n=20,mean=ga_mean_growth,sd=ga_sd_growth))
 
-# Step 2: snag the roach data from the df by producing the randomized fake data and then run regression analyses on each group
-# this next line is faulty!
-#lm_wt <- lmCalc("WT.growth", "WT.intake", allTheRoaches)
-#lm_hyb <- lmCalc("Hyb.growth", "Hyb.intake", allTheRoaches)
-#lm_ga <- lmCalc("GA.growth", "GA.intake", allTheRoaches)
 
-sapply(lapply(allTheRoaches, unique), length) # see number of unique values
+# Run linear regressions ----------------------
+
+lm_wt <- lmCalc(allTheRoaches$WT.growth, allTheRoaches$WT.intake, allTheRoaches)
+print(lm_wt)
+lm_hyb <- lmCalc(allTheRoaches$Hyb.growth, allTheRoaches$Hyb.intake, allTheRoaches)
+print(lm_hyb)
+lm_ga <- lmCalc(allTheRoaches$GA.growth, allTheRoaches$GA.intake, allTheRoaches)
+print(lm_ga)
 
 # Plot data ----------------------
-#wt_scatter <- scatterplotMaker("WT.growth", "WT.intake", "Wild Type intake versus growth", allTheRoaches)
-  
-# So I figured out the issue! I'm having trouble sending a column from a data frame through the function. I think it would help if I rework things and made the dataframe in the functions (even though it feels more inefficient. Right now this code looks a bit messy but it'll be okay!)
-
-# The game plan:
-# put the allTheRoaches dataframe creation into a function in the functions script.
-# try the regression creation again and see how that goes
-# 
-
-#  plot(WT.growth ~ WT.intake, main = "Wild Type intake versus growth", data=allTheRoaches)
-#hyb_scatter <- plot(Hyb.growth ~ Hyb.intake, main = "Hybrid intake versus growth", data=allTheRoaches)
-#ga_scatter <- plot(GA.growth ~ GA.intake, main = "Glucose Averse intake versus growth", data=allTheRoaches)
-# Step 3: make plots for each group
-
+wt_scatter <- scatterplotMaker(allTheRoaches$WT.growth,  allTheRoaches$WT.intake, "Wild Type intake versus growth", allTheRoaches)
+hyb_scatter <- scatterplotMaker(allTheRoaches$Hyb.growth,  allTheRoaches$Hyb.intake, "Hybrid intake versus growth", allTheRoaches)
+ga_scatter <- scatterplotMaker(allTheRoaches$GA.growth,  allTheRoaches$GA.intake, "Glucose Averse intake versus growth", allTheRoaches) # These will generate scatterplots of the data
 
 # Summarize data ----------------------
-#wtSum <- regSummary(lm_wt)
-#hybSum <- regSummary(lm_hyb)
-#gaSum <- regSummary(lm_ga)
+wtSum <- regSummary(lm_wt)
+print(wtSum)
+hybSum <- regSummary(lm_hyb)
+print(hybSum)
+gaSum <- regSummary(lm_ga) # These will summarize the data
+print(gaSum)
 
 ```
 
-```{r, echo=FALSE, eval=FALSE}
-
-# This is code I used previously in Hwk 8 that I need to adapt for Hwk 9
-# Here is the code I need to do stuff with in functions
-
-allTheRoaches <- data.frame("WT.intake"=rnorm(n=20,mean=11.7636,sd=1.3207022),"WT.growth"=rnorm(n=20,mean=6.6646158,sd=0.8682219),"Hyb.intake"=rnorm(n=20,mean=11.201452,sd=1.1952825),"Hyb.growth"=rnorm(n=20,mean=7.0736739,sd=1.0584402),"GA.intake"=rnorm(n=20,mean=6.509735,sd=3.1441545),"GA.growth"=rnorm(n=20,mean=3.967465,sd=1.1635215))
-print(allTheRoaches)
-
-# Regression analysis on each group
-lm_WT <- lm(WT.growth ~ WT.intake, data=allTheRoaches)
-summary(lm_WT)
-lm_Hyb <- lm(Hyb.growth ~ Hyb.intake, data=allTheRoaches)
-summary(lm_Hyb)
-lm_GA <- lm(GA.growth ~ GA.intake, data=allTheRoaches)
-summary(lm_GA)
-
-wt_scatter <- plot(WT.growth ~ WT.intake, main = "Wild Type intake versus growth", data=allTheRoaches)
-hyb_scatter <- plot(Hyb.growth ~ Hyb.intake, main = "Hybrid intake versus growth", data=allTheRoaches)
-ga_scatter <- plot(GA.growth ~ GA.intake, main = "Glucose Averse intake versus growth", data=allTheRoaches)
-```
 

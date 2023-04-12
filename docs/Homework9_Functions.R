@@ -22,7 +22,7 @@
 #----------------------------
 clean_up <- function(rawDataFrame) {
   cleanDataFrame <- filter(rawDataFrame, Diet == "medprot") # keeps only the data for roaches that had medium protein diets
-  cleanDataFrame <- select(cleanDataFrame, Strain, Diet, total.intake, growth) # keeps only the relevant columns
+  cleanDataFrame <- dplyr::select(cleanDataFrame, Strain, Diet, total.intake, growth) # keeps only the relevant columns
   cleanDataFrame <- filter(cleanDataFrame, growth != '.') # this gets rid of the pesky missing value
   return(cleanDataFrame);
 }
@@ -62,7 +62,7 @@ clean_up <- function(rawDataFrame) {
  #----------------------------
  growthCounter <- function(theCleanData, theStrain) {
    tempData <- filter(theCleanData, Strain == theStrain)
-   tempData <- select(tempData, growth)
+   tempData <- dplyr::select(tempData, growth)
    return(count(tempData))
  }  
  
@@ -75,7 +75,7 @@ clean_up <- function(rawDataFrame) {
  #----------------------------
  intakeCounter <- function(theCleanData, theStrain) {
    tempData <- filter(theCleanData, Strain == theStrain)
-   tempData <- select(tempData, total.intake)
+   tempData <- dplyr::select(tempData, total.intake)
    return(count(tempData))
  }  
   
@@ -112,8 +112,8 @@ clean_up <- function(rawDataFrame) {
  # input: cockroach group (by its total intake and growth), and the name of the dataframe
  # output: linear regression
  #----------------------------
- lmCalc <- function(xVar, yVar, frameName) {
-   return(lm(xVar ~ yVar, data=frameName));
+ lmCalc <- function(yVar, xVar, frameName) {
+   return(lm(yVar ~ xVar, data=frameName));
  } 
  
  ####################################
@@ -123,12 +123,10 @@ clean_up <- function(rawDataFrame) {
  # input: column names, title, and dataframe name
  # output: scatterplot
  #----------------------------
- scatterplotMaker <- function(grow, intake, name, dataframe) {
-   . <- plot(grow ~ intake, main = name, data=dataframe)
+ scatterplotMaker <- function(growth, total.intake, title, dataframe) {
+   . <- plot(growth ~ total.intake, main = title, data=dataframe)
    return(.);
  }
- 
- 
  
  ####################################
  # FUNCTION:  regSummary
