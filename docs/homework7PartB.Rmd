@@ -95,7 +95,7 @@ pSpecial + statSpecial
 
 **Problem 3**
 
-Honestly, I think that the uniform probability density is the one that best fits the data. This was surprising!
+I think that the normal probability density is the one that best fits the data.
 
 
 
