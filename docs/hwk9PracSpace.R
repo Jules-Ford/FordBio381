@@ -10,7 +10,14 @@ cleanTest <- filter(cleanTest, growth != ".")
 #This is a test to filter out the "."
 
 
+testingTheRoaches <- data.frame("WT.intake"=rnorm(n=20,mean=11.7636,sd=1.3207022),"WT.growth"=rnorm(n=20,mean=6.6646158,sd=0.8682219),"Hyb.intake"=rnorm(n=20,mean=11.201452,sd=1.1952825),"Hyb.growth"=rnorm(n=20,mean=7.0736739,sd=1.0584402),"GA.intake"=rnorm(n=20,mean=6.509735,sd=3.1441545),"GA.growth"=rnorm(n=20,mean=3.967465,sd=1.1635215))
+print(allTheRoaches)
 
+print(testingTheRoaches[,WT.intake])
+
+
+lm_WTjulia <- lm(WT.growth ~ WT.intake, data=allTheRoaches)
+summary(lm_WT)
 
 #  This function will calculate these data for each group, using the summarize() and group_by() functions.
 
