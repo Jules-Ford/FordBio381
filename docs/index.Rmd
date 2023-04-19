@@ -31,4 +31,4 @@ This is my portfolio of homework assignments for Computational Biology!
 
 [Click here to see my Homework 10 on For loops and Randomization Tests.](homework10.html) It is in the works!
 
-[Click here to see my Homework 11 on Batch Processing.](homework11.html) This one is still in the works!
+[Click here to see my Homework 11 on Batch Processing.](homework11.html)
