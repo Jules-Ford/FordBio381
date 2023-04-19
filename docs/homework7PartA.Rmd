@@ -11,6 +11,7 @@ I need to copy-paste the code from the homework and run them to get a bit famili
 
 This is to read in the file:
 ```{r eval=FALSE, include=TRUE}
+setwd("~/Documents/Comp Bio/FordBio381/docs")
 z <- read.table("MyDataFile.csv",header=TRUE,sep=",")
 str(z)
 summary(z)

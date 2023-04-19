@@ -5,15 +5,9 @@ date: "2023-03-08"
 output: html_document
 ---
 
-**This is the part of the homework that I have yet to finish!**
-My current problems is that I'm having trouble figuring out what to generate for the new x and y variables, and how to place those in a new data frame.
-
-Afterward I need to figure out how to re-plot the normal distribution with the real data from Part B (initially I chose to do a uniform distribution so I figured that out, but I haven't figured out how to re-plot the normal distribution).
-
-
 **Problem 4**
 
-So in Part B I found that the probability distribution that fit my data best was uniform. So, in order to generate new data, I'm going to need to use the `runif()` function. From the data in Part B, I found the maximum likelihood parameters for a normal distribution: `n=30`, `min=0.58`, `max=13.02`.
+So in Part B I found that the probability distribution that fit my data best was uniform. So, in order to generate new data, I'm going to need to use the `rnorm()` function. From the data in Part B, I found the maximum likelihood parameters for a normal distribution.
 
 First I'll load in some packages:
 ```{r}
@@ -23,15 +17,18 @@ library(MASS) # for maximum likelihood estimation
 
 Next, I'll plot the new randomized plot:
 ```{r}
-# Need to generate the x and y variables. X is initial plant volume and Y is the density. I'm goint to place these data into a dataframe.
+voleData <- read.table("hwk7Data.csv",header=TRUE,sep=",")
+normPars <- fitdistr(voleData$Initial.plant.volume..m3.,"normal")
+normPars$estimate["mean"] 
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+normPars$estimate["sd"]
 
-#newPlotDF <- data.frame("XInitialVol"=rnorm(n=30,min=0.58,max=13.02),"YDensity"=rnorm(30,min=.5,max=.8)) # For now I'm totally making up values for the Y variable. I'm not sure how to calculate them just yet so I want to make sure the code works
+simulatedData <- data.frame(Plant_Vol=rnorm(30, mean = normPars$estimate["mean"], sd = normPars$estimate["sd"]))
 
-
-#newGraphData <- (runif(30, min=0.58, max=13.02)
-#newGraph <- ggplot(data=newPlotDF, aes(x=newPlotDF$XInitialVol,y=newPlotDF$YDensity)) + geom_histogram(color="lightblue",fill="cornsilk",linewidth=0.2)
-
-# The long story short is I'm not really sure how I'm supposed to produce the x and y variables with maximum likelihood estimation. I'm going to make sure to ask you about it in office hours!
+newGraph <- ggplot(data=simulatedData, aes(x=Plant_Vol, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",linewidth=0.2)
+print(newGraph)
 
 ```
 
@@ -42,7 +39,6 @@ Here I'll plot the graph from Part B with the real data:
 voleData <- read.table("hwk7Data.csv",header=TRUE,sep=",")
 p1 <- ggplot(data=voleData, aes(x=Initial.plant.volume..m3., y=..density..)) +
   geom_histogram(color="grey60",fill="cornsilk",linewidth=0.2)
-print(p1)
 normPars <- fitdistr(voleData$Initial.plant.volume..m3.,"normal")
 normPars$estimate["mean"] 
 meanML <- normPars$estimate["mean"]
@@ -56,4 +52,6 @@ p1 + stat
 
 Question to answer: How do the two histogram profiles compare? Do you think the model is doing a good job of simulating realistic data that match your original measurements? Why or why not?
 
-**Still need to answer this question when I figure out how to make the graph!**
+The two histograms are quite different. First, the original histogram from the data doesn't fit the normal distribution very well (but normal distribution was the closest fitting distribution nonetheless). I think if the dataset had a larger sample size the data would be more consistent between the two graphs. 
+
+I don't think the model does a good job of simulating realistic data, because it often generates some x values below 0. The x axis represents initial plant volumes, which is nonsensical because volume can't be negative.

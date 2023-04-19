@@ -44,5 +44,10 @@ boxplot(initialMass, col="lightpink")
 
 summary(initialMass) # This will generate summary information about each of the initial values
 
+# for loop (i in three things)
+# read in, make a dataframe, make a boxplot
+# don't rename it the same thing as before (lowprot_edit)
+# doesn't need to be a dataframe, line 41
+# make 3 individual plots
 ```
 
