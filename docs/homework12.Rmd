@@ -1,0 +1,53 @@
+---
+title: "Homework #12"
+author: "Jules Ford"
+date: "2023-04-19"
+output: html_document
+---
+
+For this homework since I don't have my own data I'm going to use one of the datasets from ggplot2. I don't know anything about diamonds as gemstones and there's a whole dataset on them, so I'm going to make some plots to learn more!
+
+First I want to load a few things in with the `library()` function and grab the data about diamonds.
+```{r}
+library(ggplot2) # loads the data
+library(ggthemes)
+library(patchwork)
+library(tidyverse)
+```
+
+So first I want to see the relationship between carat and price, so I made a scatterplot:
+
+```{r}
+caratVersusPrice <- ggplot(diamonds, aes(x=carat, y=price)) + geom_point(color="deepskyblue3", fill="blue") + ggtitle("Relationship between carat and price of diamonds")
+print(caratVersusPrice)
+```
+
+Awesome. It seems like the higher the carat, the higher the price.
+
+Now, I want to make a histogram of all the different cut types to have a sense of the quality of diamonds in the dataset. The cut variable is categorical, so I'm going to make a histogram.
+
+```{r}
+cap = str_wrap("It appears that most of the diamonds in this dataset have a nice cut, since the majority of the data is in the 'Very Good,' 'Premium,' or 'Ideal' category.")
+
+cutHistogram <- ggplot(diamonds, aes(x=cut)) + geom_bar(fill="darkolivegreen4") + ggtitle("Counts of diamond cut in preloaded Diamond dataset") + labs(caption=cap)
+
+print(cutHistogram)
+```
+
+So this graph shows that the data have far more diamonds in higher quality cut categories than in the lower quality cut categories.
+
+Now I want to make one more graph, about the relationship between cut and carat. Cut is a categorical variable and carat is a numeric variable. I'm going to start by finding the mean carat value for each of the types of cuts. Then, I'll make a lollipop chart because I think it'd be a fun way to represent the groups!
+
+```{r}
+DiamondMeans <- select(diamonds, carat:cut) # this makes a new df that selects only the 2 columns I care about
+diamondCuts <- group_by(DiamondMeans, cut) # this groups the new df by type of cut
+avgCarat <- summarize(diamondCuts, meanCarat = mean(carat))
+
+cutVcarat <- ggplot(avgCarat, aes(x=cut, y=meanCarat)) + 
+  geom_point(size=5, color="deeppink4", fill=alpha("palevioletred", 0.3), alpha=0.7, shape=21, stroke=2) +
+  geom_segment(aes(x=cut, xend=cut, y=0, yend=meanCarat), color="palevioletred") + 
+  ggtitle("Average carat size by cut type for preloaded diamond dataset")
+print(cutVcarat)
+```
+
+I was surprised by this data because I was expecting the higher quality cuts to have a greater average mean carat in comparison to the "fair" and "good" diamonds!

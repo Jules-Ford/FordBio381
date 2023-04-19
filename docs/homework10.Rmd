@@ -47,8 +47,8 @@ shortZeroCalc <- function(vector) {
   return(length(vector[vector %% 10 == 0]))
 }
 
-trying <- shortZeroCalc(newVec)
-trying
+numOfZeroes <- shortZeroCalc(newVec)
+numOfZeroes
 ```
 This problem tasks us with shortening our first answer into by using subsetting rather than looping to accomplish the same task. In the first problem I went the trickier route of building a function that could count every single zero (so it could detect that 900 had two 0s). In simplifying this version, because I didn't go the same route of turning everything into character strings, I settled for the counter being able to detect whether a given item had at least one 0. 
  
