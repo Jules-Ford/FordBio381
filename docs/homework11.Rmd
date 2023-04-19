@@ -5,15 +5,6 @@ date: "2023-04-12"
 output: html_document
 ---
 
-Tasks remaining:
-- pick a statistical analysis and write functions
-- create an empty dataframe to hold summary statistics
-- Loop through each dataset (.csv), read through each .csv, pull out each stat and place into the empty dataframe
-
-
-**Note to self: The code is all here, but I want to put stuff in a for loop for lines 34-44.**
-
-
 The dataset that I'm using for this code is about three types of German Cockroaches: glucose-averse cockroaches, hybrid cockroaches, and wild-type cockroaches. I obtained the dataset through Dryad and used the dataset in previous exercises. [click here to learn more details about the dataset I'm using!](homework8.html)
 
 My goal is to separate the original file into 3 .csv files by the type of diet each cockroach has (low protein, medium protein, and high protein). The goal is to make a boxplot of the initial mass by diet type.
@@ -32,22 +23,15 @@ for (i in c("lowprot", "medprot", "highprot")) {
   
 } # A for loop to separate the initial file into three different files called lowprot, medprot, and highprot
 
-lowProtTable <- read.table("lowprot", sep=",",header=TRUE)
-medProtTable <- read.table("medprot", sep=",",header=TRUE)
-highProtTable <- read.table("highprot", sep=",",header=TRUE)
-# These lines create a data frame, reading information from each of the three files
+
+# The code below creates a data frame, reading information from each of the three files
 # Unfortunately they have differing numbers of rows in each, so I'm just going to cut off at 55 rows for each (not the most scientific but I'm rolling with it for now)
+# Then it makes a boxplot and generates summary stats
+for (i in c("lowprot", "medprot", "highprot")) {
+  theData <- read.table(i, sep=",",header=TRUE)
+  boxplot(theData$Initial.mass, col="deepskyblue3", ylab="Initial Cockroach Mass", main=i)
+  summary(theData$Initial.mass)
+}
 
-initialMass <- data.frame("LowProt Initial Mass"=lowProtTable[1:55,("Initial.mass")], "MedProt Initial Mass"=medProtTable[1:55,("Initial.mass")], "HighProt Initial Mass"=highProtTable[1:55,("Initial.mass")])
-
-boxplot(initialMass, col="lightpink")
-
-summary(initialMass) # This will generate summary information about each of the initial values
-
-# for loop (i in three things)
-# read in, make a dataframe, make a boxplot
-# don't rename it the same thing as before (lowprot_edit)
-# doesn't need to be a dataframe, line 41
-# make 3 individual plots
 ```
 
