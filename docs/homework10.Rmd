@@ -33,7 +33,24 @@ print(check)
 This problem requires us to take a vector and determine the number of zeroes in that vector. To make this function, I used the `paste()` function so I could collapse the vector into a single character string with no spaces. Then, I used the `strsplit()` function to separate each character from that string into its own character string object. Then, using a for loop, I checked whether that object was the character string `"0"` and if it was, I added 1 to the counter variable (the running total of zeroes in that vector).
  
 **Problem 2**
- 
+```{r}
+newVec <- c(8, 4, 0, 10, 900, 4, 0, 0, 20)
+
+####################################
+# FUNCTION: shortZeroCalc
+# packages: none
+# purpose: use subsetting to determine whether each value in a vector contains at least one 0
+# input: a numeric vector
+# output: the number of items inside the numeric vector that contain at least one 0
+#----------------------------
+shortZeroCalc <- function(vector) {
+  return(length(vector[vector %% 10 == 0]))
+}
+
+trying <- shortZeroCalc(newVec)
+trying
+```
+This problem tasks us with shortening our first answer into by using subsetting rather than looping to accomplish the same task. In the first problem I went the trickier route of building a function that could count every single zero (so it could detect that 900 had two 0s). In simplifying this version, because I didn't go the same route of turning everything into character strings, I settled for the counter being able to detect whether a given item had at least one 0. 
  
 **Problem 3**
 
