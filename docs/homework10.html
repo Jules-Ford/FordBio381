@@ -433,7 +433,17 @@ matrixMaker &lt;- function(rows, cols) {
   return(mat)
 }
 
-test &lt;- matrixMaker(8,4)</code></pre>
+test &lt;- matrixMaker(8,4)
+print(test)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    2    4    6    8
+## [3,]    3    6    9   12
+## [4,]    4    8   12   16
+## [5,]    5   10   15   20
+## [6,]    6   12   18   24
+## [7,]    7   14   21   28
+## [8,]    8   16   24   32</code></pre>
 <p>This problem tasks us with making a function that generates a matrix
 based on an input amount of rows and columns, where we have to fill each
 part of the matrix with the product of the row and column. To accomplish

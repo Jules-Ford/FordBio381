@@ -72,6 +72,7 @@ matrixMaker <- function(rows, cols) {
 }
 
 test <- matrixMaker(8,4)
+print(test)
 ```
 
 This problem tasks us with making a function that generates a matrix based on an input amount of rows and columns, where we have to fill each part of the matrix with the product of the row and column. To accomplish this, I used a for loop to iterate through each row and column in the matrix. For each part of the matrix, I multiplied the row and column number (denoted by i and j within the loop) to get the proper product!
