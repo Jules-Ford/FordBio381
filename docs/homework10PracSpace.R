@@ -5,7 +5,6 @@
 # problem 3
 # Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
 
-
 ####################################
 # FUNCTION: matrixMaker
 # packages: none
@@ -26,6 +25,10 @@ test <- matrixMaker(3,4)
 
 
 m <- matrix(data=NA, nrow=3, ncol=6)
-m[3,4] <- 5
+m[3,4] <- 5 # so this is how you assign a variable
 m[,]
+
+
+
+
 

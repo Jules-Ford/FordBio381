@@ -416,6 +416,31 @@ simplifying this version, because I didn’t go the same route of turning
 everything into character strings, I settled for the counter being able
 to detect whether a given item had at least one 0.</p>
 <p><strong>Problem 3</strong></p>
+<pre class="r"><code>####################################
+# FUNCTION: matrixMaker
+# packages: none
+# purpose: generate a matrix given its row and column
+# input: 2 integers, reprsenting rows and columns in a matrix
+# output: a matrix with the inputted dimensions, where each element is the product of the given row and column number
+#----------------------------
+matrixMaker &lt;- function(rows, cols) {
+  mat &lt;- matrix(data=NA, nrow=rows, ncol=cols) # this makes the matrix
+  for (i in 1:nrow(mat)) {
+    for (j in 1:ncol(mat)) { # I&#39;m going to loop through each row and column
+      mat[i,j] &lt;- (i * j) # and assign the product of that point in the loop (i represents the row # and j represents the column #)
+    }
+  }
+  return(mat)
+}
+
+test &lt;- matrixMaker(8,4)</code></pre>
+<p>This problem tasks us with making a function that generates a matrix
+based on an input amount of rows and columns, where we have to fill each
+part of the matrix with the product of the row and column. To accomplish
+this, I used a for loop to iterate through each row and column in the
+matrix. For each part of the matrix, I multiplied the row and column
+number (denoted by i and j within the loop) to get the proper
+product!</p>
 <p><strong>Problem 4</strong> <strong>4a</strong> <strong>4b</strong>
 <strong>4c</strong> <strong>4d</strong></p>
 
