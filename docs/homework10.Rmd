@@ -77,10 +77,10 @@ print(test)
 
 This problem tasks us with making a function that generates a matrix based on an input amount of rows and columns, where we have to fill each part of the matrix with the product of the row and column. To accomplish this, I used a for loop to iterate through each row and column in the matrix. For each part of the matrix, I multiplied the row and column number (denoted by i and j within the loop) to get the proper product!
 
-**Problem 4** **IN THE WORKS**
+**Problem 4**
 This series of problems is all about randomization tests.
 
-**4a** **IN THE WORKS**
+**4a**
 ```{r}
 ####################################
 # FUNCTION: dfMaker
@@ -91,18 +91,19 @@ This series of problems is all about randomization tests.
 #----------------------------
 library(tidyverse)
 dfMaker <- function(mean1,mean2,mean3) {
-  df <- data.frame("G1"=rnorm(10,mean=mean1,sd=0.4),"G2"=rnorm(10,mean=mean2,sd=0.4),"G3"=rnorm(10,mean=mean3,sd=0.4),"yVar"=rnorm(10,mean=mean3,sd=0.4))
-  df <- pivot_longer(df, cols=c(G1, G2, G3))
-  df <- df[,c(2,1)]
-  df <- rename(df, "Group"=name, "Response"=yVar)
+  group1 <- data.frame("Group"="Group1","Response"=rnorm(10,mean=mean1,sd=0.4))
+  group2 <- data.frame("Group"="Group2","Response"=rnorm(10,mean=mean2,sd=0.4))
+  group3 <- data.frame("Group"="Group3","Response"=rnorm(10,mean=mean3,sd=0.4))
+  df <- rbind(group1,group2,group3)
   return(df)
+  #response
 }
 
 myDF <- dfMaker(3, 5, 18)
 print(myDF)
 ```
 
-This is a slightly inefficient way to do it, but this part of the problem asks us to generate a data frame for 3 groups varying in means. I decided to make a function that took in mean values for each group and produced a dataframe with the `data.frame()` function, generating data for the response column with the `rnorm()` function.
+This part of the problem asks us to generate a data frame for 3 groups varying in means. I decided to make a function that took in mean values for each group and produced 3 data frames with the `data.frame()` function and generates data for the response column with the `rnorm()` function for each group. Then, I used the `rbind()` function to combine the data frames into one master data frame containing all the groups and their responses.
 
 **4b**
 ```{r}
@@ -131,10 +132,50 @@ print(meansVector)
 This part of the problem required us to shuffle the data, calculate the means for each group for the shuffled data, and to store those data in a vector. To do this, I first shuffled the values in the Response column with the `sample()` function. Then, I used the `group_by()` and `summarize()` functions to sort the data by group and determine the means for each group. I assigned the mean for each group to a variable and passed those variables into the vector that gets returned at the end of the function.
 
 **4c**
+```{r}
+####################################
+# FUNCTION: hundredLoop
+# packages: none
+# purpose: Use a for loop to go through the code in 4b 100 times, storing the means into a new DF
+# input: the DF from 4a
+# output: a new DF with Replicate #, and means calculated for each of the 100 trials
+#----------------------------
+hundredLoop <- function(DF) {
+  emptyDF <- data.frame("Replicate"=1:100, "G1 mean"=NA, "G2 mean"=NA, "G3 mean"=NA) # this makes a new empty data frame with replicate numbers 1-100 and empty values for each of the groups that will fill over time
+  for (i in 1:100) {
+    shuffler <- data.frame("theGroups"=DF$Group,"Shuffling"=sample(DF$Response))
+    byGroup <- group_by(shuffler, theGroups)
+    meanFinder <- summarize(byGroup, meanData = mean(Shuffling))
+    g1 <- meanFinder[[1,2]]
+    g2 <- meanFinder[[2,2]]
+    g3 <- meanFinder[[3,2]]
+    emptyDF[i,2] <- g1
+    emptyDF[i,3] <- g2
+    emptyDF[i,4] <- g3
+  }
+  return(emptyDF)
+}
 
+manyLoops <- hundredLoop(myDF)
+print(manyLoops)
+```
 
-This problem requires us to make a for loop to iterate the code in #4b 100 times. To do this, I started by using the `data.frame()` function to make an empty data frame that I'd eventually store the values in.
-
-[FINISH]
+This problem challenges us to make a for loop to iterate the code in #4b 100 times. To do this, I started by using the `data.frame()` function to make an empty data frame that I'd eventually store the values in (in its leftmost column I had it count from 1-100 for each replicate). Then, I set up a for loop that would shuffle the data in the response column, sort the data by the group number, find the mean, and assign it to its corresponding space in the empty data frame.
 
 **4d**
+```{r}
+G1hist <- ggplot(manyLoops, aes(x=G1.mean)) + geom_histogram(binwidth=0.25,fill="palevioletred3",color="palevioletred4")
+print(G1hist)
+
+G2hist <- ggplot(manyLoops, aes(x=G2.mean)) + geom_histogram(binwidth=0.25,fill="palevioletred3",color="palevioletred4")
+print(G2hist)
+
+G3hist <- ggplot(manyLoops, aes(x=G3.mean)) + geom_histogram(binwidth=0.25,fill="palevioletred3",color="palevioletred4")
+print(G3hist)
+```
+
+The final part of the problem tasks us with generating histograms for each of the groups of means for the reshuffled values. Afterward, we need to compare these histograms with the means generated from the originally shuffled groups.
+
+Since I'm running these every time I knit (just to show code is working and everything) the means written down here will be different values from what shows up on the site. These were from a prior time that I ran the code but I think a lot of my findings will remain consistent: 
+
+For Group 1, the mean was 7.704529. Most of the means were from 6-11, so it seems consistent. For Group 2, the mean was 11.131424. The histogram showed a lot of means for Group 2 that were below 11, which makes sense because the data from the other groups (when shuffled) was on the lower side. Finally, for Group3, the mean was 7.008356. The data shown in the histogram are generally higher than that, which makes sense because some of the shuffled data would likely increase the means for the group when the data are shuffled together!

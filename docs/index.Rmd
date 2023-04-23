@@ -29,8 +29,10 @@ This is my portfolio of homework assignments for Computational Biology!
 
 [Click here to see my Homework 9 on Organizing Code with Structured Programming.](homework9.html)
 
-[Click here to see my Homework 10 on For loops and Randomization Tests.](homework10.html) It is in the works!
+[Click here to see my Homework 10 on For loops and Randomization Tests.](homework10.html)
 
 [Click here to see my Homework 11 on Batch Processing.](homework11.html)
 
 [Click here to see my Homework 12 on Advanced ggplotting.](homework12.html)
+
+At this point I think I've completed all of the homework assignments & problems needed for the portfolio. This was a really fun semester!

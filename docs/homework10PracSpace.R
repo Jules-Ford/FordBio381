@@ -5,14 +5,16 @@
 
 library(tidyverse)
 dfMaker <- function(mean1,mean2,mean3) {
-  df <- data.frame("G1"=rnorm(30,mean=mean1,sd=0.4),"G2"=rnorm(30,mean=mean2,sd=0.4),"G3"=rnorm(30,mean=mean3,sd=0.4),"yVar"=rnorm(30,mean=mean3,sd=0.4))
-  df <- pivot_longer(df, cols=c(G1, G2, G3))
-  df <- df[,c(2,1)]
-  df <- rename(df, "Group"=name, "Response"=yVar)
+  group1 <- data.frame("Group"="Group1","Response"=rnorm(10,mean=mean1,sd=0.4))
+  group2 <- data.frame("Group"="Group2","Response"=rnorm(10,mean=mean2,sd=0.4))
+  group3 <- data.frame("Group"="Group3","Response"=rnorm(10,mean=mean3,sd=0.4))
+  df <- rbind(group1,group2,group3)
   return(df)
 }
 
 myDF <- dfMaker(3, 5, 18)
+
+#
 
 
 ####################################
@@ -43,7 +45,7 @@ meansVector <- dfShuffler(myDF)
 # output: a new DF with Replicate #, and means calculated for each of the 100 trials
 #----------------------------
 hundredLoop <- function(DF) {
-  emptyDF <- data.frame("Replicate"=1:100, "G1"=NA, "G2"=NA, "G3"=NA) # this makes a new empty data frame with replicate numbers 1-100 and empty values for each of the groups that will fill over time
+  emptyDF <- data.frame("Replicate"=1:100, "G1 mean"=NA, "G2 mean"=NA, "G3 mean"=NA) # this makes a new empty data frame with replicate numbers 1-100 and empty values for each of the groups that will fill over time
   for (i in 1:100) {
     shuffler <- data.frame("theGroups"=DF$Group,"Shuffling"=sample(DF$Response))
     byGroup <- group_by(shuffler, theGroups)
@@ -58,9 +60,31 @@ hundredLoop <- function(DF) {
   return(emptyDF)
 }
 
-Sunday <- hundredLoop(myDF)
+manyLoops <- hundredLoop(myDF)
 
-# The good news: part 4c looks great. The bad news: I think I should rewrite part 4a because the different distributions per group are not properly working. each of the groups needs to have a different distribution and I didn't take that into account with how I currently have set up the 4a dataframe. Try to figure out pivot longer to fix that or use rbind!
+
+
+# Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?
+
+library(ggplot2)
+library(patchwork)
+library(ggthemes)
+
+
+G1hist <- ggplot(manyLoops, aes(x=G1.mean)) + geom_histogram(binwidth=0.25,fill="palevioletred3",color="palevioletred4")
+print(G1hist)
+
+G2hist <- ggplot(manyLoops, aes(x=G2.mean)) + geom_histogram(binwidth=0.25,fill="palevioletred3",color="palevioletred4")
+print(G2hist)
+
+G3hist <- ggplot(manyLoops, aes(x=G3.mean)) + geom_histogram(binwidth=0.25,fill="palevioletred3",color="palevioletred4")
+print(G3hist)
+
+hist(manyLoops$G1.mean)
+hist(manyLoops$G2.mean)
+hist(manyLoops$G3.mean)
+
+
 
 
 
