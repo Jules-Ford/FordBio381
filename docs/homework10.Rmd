@@ -77,8 +77,64 @@ print(test)
 
 This problem tasks us with making a function that generates a matrix based on an input amount of rows and columns, where we have to fill each part of the matrix with the product of the row and column. To accomplish this, I used a for loop to iterate through each row and column in the matrix. For each part of the matrix, I multiplied the row and column number (denoted by i and j within the loop) to get the proper product!
 
-**Problem 4**
-**4a**
+**Problem 4** **IN THE WORKS**
+This series of problems is all about randomization tests.
+
+**4a** **IN THE WORKS**
+```{r}
+####################################
+# FUNCTION: dfMaker
+# packages: none
+# purpose: generate data frame for 3 groups of data drawn from a distribution with a different mean
+# input: 3 mean values
+# output: the dataframe
+#----------------------------
+library(tidyverse)
+dfMaker <- function(mean1,mean2,mean3) {
+  df <- data.frame("G1"=rnorm(10,mean=mean1,sd=0.4),"G2"=rnorm(10,mean=mean2,sd=0.4),"G3"=rnorm(10,mean=mean3,sd=0.4),"yVar"=rnorm(10,mean=mean3,sd=0.4))
+  df <- pivot_longer(df, cols=c(G1, G2, G3))
+  df <- df[,c(2,1)]
+  df <- rename(df, "Group"=name, "Response"=yVar)
+  return(df)
+}
+
+myDF <- dfMaker(3, 5, 18)
+print(myDF)
+```
+
+This is a slightly inefficient way to do it, but this part of the problem asks us to generate a data frame for 3 groups varying in means. I decided to make a function that took in mean values for each group and produced a dataframe with the `data.frame()` function, generating data for the response column with the `rnorm()` function.
+
 **4b**
+```{r}
+####################################
+# FUNCTION: dfShuffler
+# packages: none
+# purpose: Reshuffle response variable from prior df, find mean for each group in the new df, and return those means in a vector with 3 objects
+# input: the dataframe from the prior problem
+# output: a vector with the means
+#----------------------------
+dfShuffler <- function(DF) {
+  shuffledDF <- data.frame("theGroups"=DF$Group,"ShuffledVals"=sample(DF$Response)) # this shuffles the DF
+  byGroup <- group_by(shuffledDF, theGroups)
+  meanFinder <- summarize(byGroup, meanData = mean(ShuffledVals))
+  g1 <- meanFinder[[1,2]]
+  g2 <- meanFinder[[2,2]]
+  g3 <- meanFinder[[3,2]]
+  meanVec <- c(g1, g2, g3)
+  return(meanVec)
+}
+
+meansVector <- dfShuffler(myDF)
+print(meansVector)
+```
+
+This part of the problem required us to shuffle the data, calculate the means for each group for the shuffled data, and to store those data in a vector. To do this, I first shuffled the values in the Response column with the `sample()` function. Then, I used the `group_by()` and `summarize()` functions to sort the data by group and determine the means for each group. I assigned the mean for each group to a variable and passed those variables into the vector that gets returned at the end of the function.
+
 **4c**
+
+
+This problem requires us to make a for loop to iterate the code in #4b 100 times. To do this, I started by using the `data.frame()` function to make an empty data frame that I'd eventually store the values in.
+
+[FINISH]
+
 **4d**
